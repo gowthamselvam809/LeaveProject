@@ -109,9 +109,6 @@ dotenv.config();
 
         app.use('/police',polices)
 
-        
-        
-
         app.listen(process.env.port, () => console.log('listing to port-' + process.env.port))
     } catch (error) {
         console.log(error)

@@ -69,13 +69,13 @@ const token = sessionStorage.getItem('token')
 
               // console.log(daysDifference);
               if (r.status === "pending") {
-                pendingReq.push([p, name, bklidreq, dateFormat(r.fromDate), dateFormat(r.toDate),date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}',${bklidreq})" value="View"/>`]);
+                pendingReq.push([p, name, bklidreq, dateFormat(r.fromDate), dateFormat(r.toDate),date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}','${bklidreq}')" value="View"/>`]);
                 p++;
               } else if (r.status === "Approved") {
-                approvedReq.push([a, name, bklidreq, dateFormat(r.fromDate),dateFormat(r.toDate),date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}',${bklidreq})" value="View"/>`]);
+                approvedReq.push([a, name, bklidreq, dateFormat(r.fromDate),dateFormat(r.toDate),date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}','${bklidreq}')" value="View"/>`]);
                 a++;
               } else if(r.status==="Denied"){
-                deniedReq.push([d, name, bklidreq, dateFormat(r.fromDate),dateFormat(r.toDate), date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}',${bklidreq})" value="View"/>`]);
+                deniedReq.push([d, name, bklidreq, dateFormat(r.fromDate),dateFormat(r.toDate), date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}','${bklidreq}')" value="View"/>`]);
                 d++;
               }
 
@@ -166,7 +166,7 @@ const token = sessionStorage.getItem('token')
               for(let not of recentNotifications){
                 if(!not.adminSeen){
                   const time = timings(not.date);
-                  notifyDetails += `<a href="#" class="dropdown-item" onClick = adminSeenandShowUser('${not.requestId}',${not.bklid}) >
+                  notifyDetails += `<a href="#" class="dropdown-item" onClick = adminSeenandShowUser('${not.requestId}','${not.bklid}') >
                    <div class="media">
                      <!-- <img src="../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3"> -->
                      <div class="media-body">
@@ -217,7 +217,7 @@ const token = sessionStorage.getItem('token')
       dataType: 'json', 
       success: function (response) {
         if (response) {
-          showUserInfoModal(reqId, bklid);
+          showUserInfoModal(`${reqId}`, `${bklid}`);
         } else {
           console.log('Not setting adminseen , something went wrong');
 
