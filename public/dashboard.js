@@ -288,12 +288,12 @@ const token = sessionStorage.getItem('token')
                   let condition;
 
                   if(r.status == 'Approved'){
-                    condition = `<input type="button" name="button" id="button" value="Deny" class="btn btn-danger" onclick="deny('${reqId}',${bklid})">`
+                    condition = `<input type="button" name="button" id="button" value="Deny" class="btn btn-danger" onclick="deny('${reqId}','${bklid}')">`
                   }else if(r.status === 'Denied'){
-                    condition = `<input type="button" name="button" id="button" value="Approve" class="btn btn-warning" onclick="approve('${reqId}',${bklid})">`
+                    condition = `<input type="button" name="button" id="button" value="Approve" class="btn btn-warning" onclick="approve('${reqId}','${bklid}')">`
                   }else{
-                    condition = `<input type="button" name="button" id="button" value="Approve" class="btn btn-warning" onclick="approve('${reqId}',${bklid})">&nbsp;&nbsp;
-                    <input type="button" name="button" id="button" value="Deny" class="btn btn-danger" onclick="deny('${reqId}',${bklid})">`
+                    condition = `<input type="button" name="button" id="button" value="Approve" class="btn btn-warning" onclick="approve('${reqId}','${bklid}')">&nbsp;&nbsp;
+                    <input type="button" name="button" id="button" value="Deny" class="btn btn-danger" onclick="deny('${reqId}','${bklid})'">`
                   }
                   const beforebutton = `
                   <input type="button" name="button" id="button" value="Modify" class="btn btn-primary" onclick="modify()">&nbsp;&nbsp;
@@ -302,7 +302,7 @@ const token = sessionStorage.getItem('token')
 
                   const afterbutton = `
                   <input type="button" name="button" id="button" value="Save" class="btn btn-success" onclick="save()" >&nbsp;&nbsp;
-                <input type="button" name="button" id="button" value="Cancel" class="btn btn-danger" onclick="cancel('${reqId}',${bklid})"></td>
+                <input type="button" name="button" id="button" value="Cancel" class="btn btn-danger" onclick="cancel('${reqId}','${bklid}')"></td>
                 `
 
                   document.getElementById('before').innerHTML = beforebutton;
