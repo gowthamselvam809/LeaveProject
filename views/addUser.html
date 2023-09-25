@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IRBN | USER</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <style>
+    tr td{
+    /* width: 89px; */
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+td div{
+    width: 50px;
+}
+.table input[type="number"]
+   {
+    text-align: center;
+  }
+
+  </style>
+
+  <style>
+    .material-input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+}
+
+.material-label {
+  position: absolute;
+  pointer-events: none;
+  left: 10px;
+  top: 10px;
+  transition: 0.2s ease all;
+}
+
+.material-input:focus ~ .material-label,
+.material-input:valid ~ .material-label {
+  top: -10px;
+  font-size: 12px;
+  color: #3498db; /* Change the color as desired */
+}
+
+.rounded-input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.underline-input {
+  border: none;
+  border-bottom: 2px solid #3498db; /* Change the color as desired */
+  border-top: 2px solid #576671; /* Change the color as desired */
+  outline: none;
+  border-radius: 30px; 
+  /* text-align: center; */
+}
+
+.bootstrap-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.bootstrap-input:focus {
+  border-color: #3498db; /* Change the color as desired */
+}
+
+a{
+  cursor: pointer;
+}
+  </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
+        </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li> -->
+
+      <!-- Messages Dropdown Menu -->
+      
+      <!-- Notifications Dropdown Menu -->
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown">
+          <i class="fas fa-regular fa-user"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/profile"><i class="fas fa-solid fa-user mr-2"></i> Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/pwChange">
+            <i class="fas fa-key mr-2"></i> Change Password
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/logout">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </a>
+        </div>
+      </li>
+      
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a class="brand-link">
+      <img src="https://police.py.gov.in/PS%20Profiles09/Image%20Heads/logo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light" id="top">ADMIN</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info" id="info">
+          <!-- <a href="#" class="d-block">ManiKandan</a> -->
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      
+
+      <!-- Sidebar Menu -->
+        <!-- <nav class="mt-2 d-none" id="adminNav">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+            <li class="nav-item" >
+              <a href="/dash" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Leave Details
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item" id="prev">
+                  <a href="/yesterday" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Yesterday</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="pages/tables/data.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Today</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="pages/tables/jsgrid.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Tomorrow</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="pages/tables/jsgrid.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Later</p>
+                  </a>
+                </li>
+              </ul>
+              <li class="nav-item active">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>
+                    Employee Info
+                  </p>
+                </a>
+              </li>
+            </li>
+  
+          </ul>
+        </nav> -->
+
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false" id="adm">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item" >
+              <a href="/dash" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Leave Details
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item" id="prev">
+                  <a href="/yesterday" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Yesterday</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/today" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Today</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/tomorrow" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Tomorrow</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/later" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Later</p>
+                  </a>
+                </li>
+              </ul>
+              <li class="nav-item active">
+                <a href="/user" class="nav-link">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>
+                    Employee Info
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active">
+                  <i class="nav-icon fa fa-user-plus"></i>
+                  <p>Add Employee</p>
+                </a>
+              </li>
+            </li>
+  
+          </ul>
+        </nav>
+      
+      
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0"><b>Add Employee</b></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <!-- <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a >Info</a></li>
+            </ol> -->
+          </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- <div class="card-header">
+                <h3 class="card-title text-bold"></h3>
+              </div> -->
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="form-row">
+                 <div class="form-group col-lg-12">
+                  <div class="form-row">
+                  <div class="form-group col-8 col-lg-4 ">
+                      <label for="inputDate">Name</label>
+                      <input type="text" class="form-control underline-input" name="name" id="name"  />
+                  </div>
+                  <div class="form-group col-4 col-lg-2 col-sm-4 ">
+                      <label for="bkl">Buckle No.</label>
+                      <input type="number" class="form-control underline-input" name="bklid" id="bklid"  />
+                  </div>
+                  <div class="form-group col-6 col-lg-3 ">
+                    <label for="oneinputAddress">Phone Number</label>
+                    <input type="text" class="form-control  underline-input" name="phone" id="phone" oninput="validateInput(this);" maxlength="10" pattern="[0-9]*"  />
+                </div>
+
+                <div class="form-group col-6 col-lg-3">
+                    <label for="alternate">Alternate Number</label>
+                    <input type="text" class="form-control underline-input normal" name="alterante" id="alternate" oninput="validateInput(this);" maxlength="10" pattern="[0-9]*" />
+                </div>
+                </div>
+
+                <div class="form-row">
+                        <div class="form-group col-3 col-lg-2">
+                        <label for="COY">COY</label>
+                        <input type="text" class="form-control underline-input" name="coy" id="COY" />
+                    </div>
+                    <div class="form-group col-3 col-lg-2 ">
+                        <label for="COY">Designation</label>
+                        <input type="text" class="form-control underline-input" name="designation" id="policetype" />
+                    </div>
+                    <div class="form-group col-6 col-lg-2">
+                        <label for="dob">D.O.B</label>
+                        <input type="date" class="form-control underline-input normal" name="dob" id="dob" />
+                    </div>
+                    
+                        <div class="form-group col-12 col-lg-6">
+                        <label for="email">Email </label>
+                        <input type="email" class="form-control underline-input normal" name="email"  id="email" />
+                        </div>
+                        <div class="form-group col-12 col-lg-6">
+                        <label for="address">Address</label>
+                        <textarea class="form-control underline-input normal"  name="address " id="address" cols="30" ></textarea>
+                    </div>
+                    <div class="form-group col-6 col-lg-3">
+                      <label for="phoneNumber">Access Type</label>
+                      <select class="form-control underline-input" name="accessType" id="accessType" >
+                        <option value="admin">Admin</option>
+                        <option value="normal">Employee</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-6 col-lg-3">
+                      <label for="alternateNumber">isActive</label>
+                      <select class="form-control underline-input" name="isActive" id="isActive" >
+                        <option value= '1' >yes</option>
+                        <option value= '0' > No</option>
+                      </select>
+                    </div>
+
+
+                </div>
+                </div>
+              
+              
+                      
+            </div>
+                    
+                </div>
+
+                  <div class="form-group col-12">
+                    <div class="float-right " id="after">
+                      <button type="button" class="btn btn-success mr-3" onclick="create()">Create</button>
+                    </div>   
+                            
+                    <!-- <div class="d-flex justify-content-between" id="before">
+                        <button type="button" class="btn btn-danger ml-3 d-none" onclick="deleteUser()" id="deluser" >Delete</button>
+                      <button type="button" class="btn btn-warning mr-3" onclick="edit()">Edit</button>
+                    </div>
+                  </div> -->
+                  <!-- <hr> -->
+          
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    
+    <!-- Control sidebar content goes here -->
+  </aside>
+  
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../plugins/jszip/jszip.min.js"></script>
+<script src="../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+<script src="../addUser.js"></script>
+<!-- AdminLTE for demo purposes -->
+<!-- <script src="../../dist/js/demo.js"></script> -->
+<!-- Page specific script -->
+
+</body>
+</html>

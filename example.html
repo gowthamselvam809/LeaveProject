@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info Box</title>
+    <!-- Include Bootstrap CSS and Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .info-box {
+            position: relative;
+        }
+
+        .info-box-down-arrow {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .info-box-hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="info-box">
+            <span class="info-box-icon bg-info">CL</span>
+            <div class="info-box-content">
+                <span class="info-box-text">Casual Leave</span>
+                <span class="info-box-number">10</span>
+            </div>
+            <div class="info-box-down-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <div class="info-box-hidden mt-2">
+            <!-- Info Box 1 -->
+            <div class="info-box">
+                <span class="info-box-icon bg-info">Info 1</span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Info Box 1</span>
+                    <span class="info-box-number">Content 1</span>
+                </div>
+            </div>
+            <!-- Info Box 2 -->
+            <div class="info-box">
+                <span class="info-box-icon bg-info">Info 2</span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Info Box 2</span>
+                    <span class="info-box-number">Content 2</span>
+                </div>
+            </div>
+            <!-- Info Box 3 -->
+            <div class="info-box">
+                <span class="info-box-icon bg-info">Info 3</span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Info Box 3</span>
+                    <span class="info-box-number">Content 3</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Hide the additional info boxes initially
+            $('.info-box-hidden').hide();
+
+            // Toggle the additional info boxes when the arrow is clicked
+            $('.info-box-down-arrow').click(function () {
+                const hiddenBoxes = $(this).siblings('.info-box-hidden');
+                hiddenBoxes.slideToggle();
+                // Toggle the arrow icon
+                const arrowIcon = $(this).find('i');
+                arrowIcon.toggleClass('fa-chevron-down fa-chevron-up');
+            });
+
+            // Close the additional info boxes when clicking anywhere on the page
+            $(document).click(function (e) {
+                if (!$(e.target).closest('.info-box').length) {
+                    $('.info-box-hidden').slideUp();
+                    // Reset arrow icons to down
+                    $('.info-box-down-arrow i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

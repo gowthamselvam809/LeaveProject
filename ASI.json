@@ -1,0 +1,186 @@
+[
+    {
+      "bklid": "051002",
+      "policetype": "ASI",
+      "name": "Arulala Perumal. K",
+      "COY": "A",
+      "phoneNumber": 6380218240,
+      "alternateNumber": 9943351002
+    },
+    {
+      "bklid": "051003",
+      "policetype": "ASI",
+      "name": "Martin Francois. R",
+      "COY": "B",
+      "phoneNumber": 9894871624,
+      "alternateNumber": 9600634042
+    },
+    {
+      "bklid": "051004",
+      "policetype": "ASI",
+      "name": "Nadarajan. P",
+      "COY": "C",
+      "phoneNumber": 9843871023,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051005",
+      "policetype": "ASI",
+      "name": "Sandhosh Kumar. P",
+      "COY": "HQ",
+      "phoneNumber": 9944352245,
+      "alternateNumber": 9894358011
+    },
+    {
+      "bklid": "051006",
+      "policetype": "ASI",
+      "name": "Balasabarinathan. B",
+      "COY": "D",
+      "phoneNumber": 9786444267,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051008",
+      "policetype": "ASI",
+      "name": "Manon. M",
+      "COY": "F",
+      "phoneNumber": 9092795137,
+      "alternateNumber": 8680767854
+    },
+    {
+      "bklid": "051009",
+      "policetype": "ASI",
+      "name": "Sugumar. G",
+      "COY": "E",
+      "phoneNumber": 9751531739,
+      "alternateNumber": 8667631011
+    },
+    {
+      "bklid": "051010",
+      "policetype": "ASI",
+      "name": "Nandakumar. K",
+      "COY": "A",
+      "phoneNumber": 8531965636,
+      "alternateNumber": 7598391330
+    },
+    {
+      "bklid": "051011",
+      "policetype": "ASI",
+      "name": "Mahendiraprabu. S",
+      "COY": "B",
+      "phoneNumber": 9952460212,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051012",
+      "policetype": "ASI",
+      "name": "Rajeesh. R",
+      "COY": "C",
+      "phoneNumber": 9944316352,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051013",
+      "policetype": "ASI",
+      "name": "Balamurugan. K",
+      "COY": "D",
+      "phoneNumber": 9894822494,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051014",
+      "policetype": "ASI",
+      "name": "Sathishkumar. N",
+      "COY": "E",
+      "phoneNumber": 9600317292,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051015",
+      "policetype": "ASI",
+      "name": "Rajaprabu. K",
+      "COY": "HQ",
+      "phoneNumber": 9994050437,
+      "alternateNumber": 9047050437
+    },
+    {
+      "bklid": "051016",
+      "policetype": "ASI",
+      "name": "Jijithdhar. D",
+      "COY": "F",
+      "phoneNumber": 9633685818,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051017",
+      "policetype": "ASI",
+      "name": "Ashokkumar. A",
+      "COY": "B",
+      "phoneNumber": 9994283839,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051018",
+      "policetype": "ASI",
+      "name": "Rajasegaran. R",
+      "COY": "E",
+      "phoneNumber": 9677685389,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051042",
+      "policetype": "ASI",
+      "name": "Janarthanan. S",
+      "COY": "F",
+      "phoneNumber": 8189883978,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051050",
+      "policetype": "ASI",
+      "name": "Vinayagamurugan. S",
+      "COY": "D",
+      "phoneNumber": 7810980683,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051022",
+      "policetype": "HC",
+      "name": "Sundar. D",
+      "COY": "",
+      "phoneNumber": 8148381813,
+      "alternateNumber": 7639688903
+    },
+    {
+      "bklid": "051025",
+      "policetype": "HC",
+      "name": "Pushparaj. P",
+      "COY": "",
+      "phoneNumber": 9443535073,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051281",
+      "policetype": "PC",
+      "name": "Ragunathan.K",
+      "COY": "",
+      "phoneNumber": 9344413445,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051368",
+      "policetype": "PC",
+      "name": "Sudhakar. R",
+      "COY": "",
+      "phoneNumber": 9787066144,
+      "alternateNumber": null
+    },
+    {
+      "bklid": "051653",
+      "policetype": "PC",
+      "name": "Ramesh. A",
+      "COY": "",
+      "phoneNumber": 9843897907,
+      "alternateNumber": null
+    }
+    ]

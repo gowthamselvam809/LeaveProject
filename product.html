@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container-fluid" id="product-list">
+        <div class="row d-flex">
+            <div class="col-6">
+                <div class="card" id="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+//    function onload(){
+//     fetch('https://dummyjson.com/products')
+//         .then(res => res.json())
+//         .then(data=>{
+//             let datas;
+//             const card = document.getElementById('card')
+//             for(let product of data.products){
+//                 datas += `
+//                 <img src="${product.images[0]}" class="card-img-top" alt="...">
+//                 <h5 class="card-title">${product.title}</h5>
+//                         <h6 class="card-subtitle mb-2 text-muted">${product.category}</h6>
+//                         <p class="card-text">Description : ${product.description}</p>
+//                         <a href="#" class="card-link">Buy</a>
+//                         <p class="card-text">Price : ${product.price} </p>
+//                 `
+//             }
+//             datas += datas
+//             card.innerHTML = datas;
+//         });
+//    }
+//    onload();
+const productList = document.getElementById('product-list');
+let currentPage = 1; // Track the current page of results
+let isLoading = false; // Track if a request is already in progress
+
+function fetchMoreProducts() {
+  if (isLoading) return; // Prevent multiple requests at the same time
+  isLoading = true;
+
+  // Make an API request to fetch the next page of products
+  fetch(`https://dummyjson.com/products?page=${currentPage}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data && data.products && data.products.length > 0) {
+        // Append the new products to the product list
+        data.products.forEach((product) => {
+          const productItem = document.createElement('div');
+          productItem.classList.add('product-item');
+          productItem.innerHTML = `
+            <img src="${product.images[0]}" class="card-img-top" alt="...">
+            <h5 class="card-title">${product.title}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">${product.category}</h6>
+            <p class="card-text">Description: ${product.description}</p>
+            <a href="#" class="card-link">Buy</a>
+            <p class="card-text">Price: ${product.price}</p>
+          `;
+          productList.appendChild(productItem);
+        });
+        currentPage++; // Increment the page number
+        isLoading = false;
+      } else {
+        // No more products to load
+        // You can optionally hide the loader or display a message
+        isLoading = false;
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching products:', error);
+      isLoading = false;
+    });
+}
+
+// Use the Intersection Observer to detect when the user scrolls to the bottom
+const options = {
+  root: null, // Use the viewport as the root
+  rootMargin: '0px', // No margin
+  threshold: 0.1, // Trigger when 10% of the target is visible
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      // The bottom of the product list is in view, fetch more products
+      fetchMoreProducts();
+    }
+  });
+}, options);
+
+// Start observing the bottom of the product list
+const sentinel = document.createElement('div');
+sentinel.classList.add('sentinel');
+productList.appendChild(sentinel);
+observer.observe(sentinel);
+
+// Load the initial set of products
+fetchMoreProducts();
+
+</script>
+</body>
+</html>

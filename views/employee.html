@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IRBN | PP</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css"
+    />
+
+    <!-- Include DataTables CSS and JS -->
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script> -->
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" /> -->
+
+    <!-- Ionicons -->
+    <link
+      rel="stylesheet"
+      href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+    />
+    <!-- Tempusdominus Bootstrap 4 -->
+    <!-- <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css"> -->
+    <!-- iCheck -->
+    <!-- <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css"> -->
+    <!-- JQVMap -->
+    <!-- <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css"> -->
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css" />
+    <!-- overlayScrollbars -->
+    <link
+      rel="stylesheet"
+      href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+      integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Daterange picker -->
+    <!-- <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css"> -->
+    <!-- summernote -->
+    <!-- <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css"> -->
+    <style>
+      /* Regular styles for the navigation links */
+      .nav-link {
+        font-size: 16px; /* Adjust the font size as needed */
+      }
+      .form-header {
+        font-size: 30px;
+      }
+      .card-header {
+        font-size: 20px;
+      }
+
+      /* Media query for screens with width up to 480 pixels */
+      @media (max-width: 570px) {
+        .tabl {
+          font-size: 10px;
+          /* width: 60px;  */
+          /* Adjust the font size for smaller screens */
+        }
+        .div-header {
+          font-size: 12px;
+        }
+        .box1 {
+          display: none;
+        }
+      }
+
+      @media (min-width: 570px) {
+        .info-box-hidden {
+          display: none;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.8s ease-in-out;
+        }
+        #infoBox {
+          display: none;
+        }
+      }
+
+      .non-responsive {
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflowing content */
+        text-overflow: ellipsis; /* Show ellipsis (...) for clipped content */
+      }
+      @media (max-width: 480px) {
+        /* Apply styles to prevent "Reason" column from shrinking */
+        .table th.non-responsive,
+        .table td.non-responsive {
+          white-space: nowrap; /* Prevent text wrapping */
+          overflow: hidden; /* Hide overflowing content */
+          text-overflow: ellipsis; /* Show ellipsis (...) for clipped content */
+        }
+        .tabl {
+          font-size: 13px;
+        }
+      }
+
+      tr > th {
+        min-width: 70px;
+      }
+
+      @media (max-width: 767px) {
+        .daterangepicker {
+          transform: scale(0.8); /* Adjust the scale factor as needed */
+          transform-origin: top left; /* Adjust the origin point as needed */
+        }
+        .form-header {
+          font-size: 20px;
+        }
+        .alert {
+          font-size: 11px;
+        }
+      }
+    </style>
+
+    <style>
+      .info-box {
+        position: relative;
+      }
+
+      .info-box-down-arrow {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+
+      /* .info-box-hidden {
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out; 
+} */
+
+      .info-box-hidden {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.8s ease-in-out; /* Add a transition for smooth sliding */
+      } 
+      a{
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Preloader -->
+      <div
+        class="preloader flex-column justify-content-center align-items-center"
+      >
+        <img
+          class="animation__shake"
+          src="../assets/pypolice.png"
+          alt="IRBN Police"
+          height="300"
+          width="300"
+        />
+      </div>
+
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" role="button"
+              ><i class="fas fa-bars"></i
+            ></a>
+          </li>
+          <!-- <li class="nav-item d-none d-sm-inline-block">
+        <a class="nav-link">Home</a>
+      </li> -->
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <!-- Navbar Search -->
+          <!-- <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
+        </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li> -->
+
+          <!-- Messages Dropdown Menu -->
+
+          <!-- Notifications Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="far fa-bell"></i>
+              <span class="badge badge-warning navbar-badge" id="badge">0</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <span class="dropdown-item dropdown-header" id="ihead"
+                >15 Notifications</span
+              >
+              <div class="dropdown-divider"></div>
+              <div id="notify"></div>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+              <i class="fas fa-regular fa-user"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/profile"
+                ><i class="fas fa-solid fa-user mr-2"></i> Profile</a
+              >
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/pwChange">
+                <i class="fas fa-key mr-2"></i> Change Password
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#" onclick="logout()">
+                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+              </a>
+            </div>
+          </li>
+          <!-- <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li> -->
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a class="brand-link">
+          <img
+            src="https://police.py.gov.in/PS%20Profiles09/Image%20Heads/logo.jpg"
+            alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3"
+            style="opacity: 0.8"
+          />
+          <span class="brand-text font-weight-light">IRBN</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img
+                src="dist/img/user2-160x160.jpg"
+                class="img-circle elevation-2"
+                alt="User Image"
+              />
+            </div>
+            <div class="info" id="info">
+              <!-- <a href="#" class="d-block">ManiKandan</a>  -->
+            </div>
+          </div>
+
+          <!-- SidebarSearch Form -->
+          <!-- <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div> -->
+
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul
+              class="nav nav-pills nav-sidebar flex-column"
+              data-widget="treeview"
+              role="menu"
+              data-accordion="false"
+            >
+              <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+              <li class="nav-item menu-open">
+                <a  class="nav-link active">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>Apply Leave</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/leavehistory" class="nav-link">
+                  <i class="nav-icon fa fa-history"></i>
+                  <p>Leave History</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <h1 class="mb-3"><b>Available Leaves</b></h1>
+            <div class="row">
+              <!-- ----------------------------------------------------------------------------------------------------------- -->
+              <div class="col-md-3 col-sm-6 col-12 box1">
+                <div class="info-box">
+                  <span class="info-box-icon bg-maroon">CL</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Casual Leave(CL)</span>
+                    <span class="info-box-number" id="cld"></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- Info Box 2 -->
+              <div class="col-md-3 col-sm-6 col-12 box1">
+                <div class="info-box">
+                  <span class="info-box-icon bg-purple">HPL</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Holiday Permission(HPL)</span>
+                    <span class="info-box-number" id="hpld"></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- Info Box 3 -->
+              <div class="col-md-3 col-sm-6 col-12 box1">
+                <div class="info-box">
+                  <span class="info-box-icon bg-danger">RH</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Restricted Holiday(RH)</span>
+                    <span class="info-box-number" id="rhd"></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <div class="col-md-3 col-sm-6 col-12 box1">
+                <div class="info-box">
+                  <span class="info-box-icon bg-orange">GH</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Government Holiday(GH)</span>
+                    <span class="info-box-number" id="ghd"></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+
+              <!-- ------------------------------------------------------------------------------------------------------------ -->
+
+              <div class="col-md-3 col-sm-6 col-12" id="infoBox">
+                <div class="info-box" id="info-box-1">
+                  <span class="info-box-icon bg-info">CL</span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Casual Leaves</span>
+                    <span class="info-box-number" id="cls"></span>
+                  </div>
+                  <div
+                    class="info-box-down-arrow"
+                    style="
+                      margin-right: 1rem;
+                      position: absolute;
+                      top: 50%;
+                      right: 0;
+                      transform: translateY(-50%);
+                    "
+                  >
+                    <i class="fas fa-chevron-down info-box-down-arrow"></i>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+
+              <!-- -------------------------------------------------------------------------------------- -->
+              <div
+                class="info-box-hidden col-md-3 col-sm-6 col-12"
+                id="info-boxes-1"
+              >
+                <!-- Info Box 1 -->
+                <div class="col-md-3 col-sm-6 col-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-maroon">CL</span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Casual Leave(CL)</span>
+                      <span class="info-box-number" id="cl"></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- Info Box 2 -->
+                <div class="col-md-3 col-sm-6 col-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-purple">HPL</span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Holiday Permission(HPL)</span>
+                      <span class="info-box-number" id="hpl"></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- Info Box 3 -->
+                <div class="col-md-3 col-sm-6 col-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-pink">RH</span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Restricted Holiday(RH)</span>
+                      <span class="info-box-number" id="rh"></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <div class="col-md-3 col-sm-6 col-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-orange">GH</span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">Government Holiday(GH)</span>
+                      <span class="info-box-number" id="gh"></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+              </div>
+              <!-- --------------------------------------------------------------------------------------- -->
+
+              <!-- /.col -->
+              <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box">
+                  <span class="info-box-icon bg-success">EL</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Earned Leave</span>
+                    <span class="info-box-number" id="el"></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+              <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box">
+                  <span class="info-box-icon bg-warning">ML</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Medical Leave(Half Pay)</span>
+                    <span class="info-box-number" id="ml"></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+              <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box">
+                  <span class="info-box-icon bg-blue">PL</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Paternity Leave</span>
+                    <span class="info-box-number" id="pl"></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0"><b>Leave Form</b></h1>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Form</a></li>
+                </ol>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            <div class="alert alert-success d-none" role="alert">
+              <i class="fa fa-check" aria-hidden="true"></i> Request has been
+              sent successfully. Please wait for the status.
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header d-flex p-0">
+                    <h3 class="card-title p-3" id="heading">Single Day Form</h3>
+                    <ul class="nav nav-pills ml-auto p-2">
+                      <li class="nav-item">
+                        <a
+                          class="nav-link active tabl"
+                          href="#tab_1"
+                          data-toggle="tab"
+                          id="single-link"
+                          >Single</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a
+                          class="nav-link tabl"
+                          href="#tab_2"
+                          data-toggle="tab"
+                          id="multiple-link"
+                          >multiple</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_1">
+                        <div class="form-row">
+                          <div class="form-group col-md-12">
+                            <label for="inputDate">Leave Date</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="daterange"
+                              id="oneday"
+                              required
+                            />
+                          </div>
+                          <div class="form-group col-md-12">
+                            <label for="inputLeaveType">Leave Type</label>
+                            <select
+                              id="oneinputState"
+                              class="form-control"
+                              onchange="showSecondDropdown()"
+                            >
+                              <option value="none" selected>
+                                Choose the Leave Type
+                              </option>
+                              <option value="casualLeave">
+                                Casual Leave(CL)
+                              </option>
+                              <option value="earnedLeave">
+                                Earned Leave(EL)
+                              </option>
+                              <option value="medicalLeave">
+                                Medical Leave(ML) Half Pay
+                              </option>
+                              <option value="paternityLeave">
+                                Paternity Leave(PL)
+                              </option>
+                            </select>
+                            <p
+                              id="onemessage"
+                              style="display: none; color: red"
+                            >
+                              Please select a leave type.
+                            </p>
+                            <p
+                              id="sferrmessage"
+                              style="display: none"
+                              class="text-danger"
+                            ></p>
+                          </div>
+
+                          <div
+                            id="onesecondDropdown"
+                            style="display: none"
+                            class="form-group col-md-12"
+                          >
+                            <label for="inputSecondDropdown"
+                              >Casual Leave Type</label
+                            >
+                            <select
+                              id="onesecondInputState"
+                              class="form-control"
+                            >
+                              <option value="none" selected>
+                                Select a Leave Type
+                              </option>
+                              <option value="casualLeave">
+                                Casual Leave(CL)
+                              </option>
+                              <option value="holidayPermission">
+                                Holiday Permission(HPL)
+                              </option>
+                              <option value="governmentHoliday">
+                                Government Holiday(GH)
+                              </option>
+                              <option value="restrictedLeave">
+                                Restricted Holiday(RH)
+                              </option>
+                            </select>
+                            <p
+                              id="sonemessage"
+                              style="display: none"
+                              class="text-danger"
+                            >
+                              Please select a leave type.
+                            </p>
+                            <p
+                              id="sserrmessage"
+                              style="display: none"
+                              class="text-danger"
+                            >
+                              hello
+                            </p>
+                          </div>
+
+                          <div class="form-group col-12">
+                            <label for="oneinputAddress"
+                              >Describe your Reason</label
+                            >
+                            <textarea
+                              name="Reason"
+                              id="onereason"
+                              cols="40"
+                              rows="3"
+                              class="form-control"
+                            ></textarea>
+                          </div>
+
+                          <div class="form-group col-lg-6">
+                            <label for="upload"
+                              >Upload File(.jpg,jpeg,pdf,word)</label
+                            ><br />
+                            <input type="file" id="onefileInput" />
+
+                            <!-- <div class="btn btn-success col fileinput-button dz-clickable">
+                                  <i class="fas fa-plus"></i>
+                                  <span>Add files</span>
+                              </div> -->
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          onclick="uploadSingleDetails()"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                      <!-- -----------------tab 2---------------------- -->
+                      <div class="tab-pane" id="tab_2">
+                        <div class="form-row">
+                          <div class="form-group col-md-12">
+                            <label for="inputDate">Start & End Date</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="daterange"
+                              id="mdate"
+                              value="01/01/2018 - 01/15/2018"
+                              required
+                            />
+                          </div>
+                          <div class="form-group col-md-12">
+                            <label for="inputLeaveType">Leave Type</label>
+                            <select
+                              id="minputState"
+                              class="form-control"
+                              onchange="showSecondDropdown()"
+                            >
+                              <option value="none" selected>
+                                Choose the Leave Type
+                              </option>
+                              <option value="casualLeave">
+                                Casual Leave(CL)
+                              </option>
+                              <option value="earnedLeave">
+                                Earned Leave(EL)
+                              </option>
+                              <option value="medicalLeave">
+                                Medical Leave(ML) Half Pay
+                              </option>
+                              <option value="paternityLeave">
+                                Paternity Leave(PL)
+                              </option>
+                            </select>
+                            <p id="mmessage" style="display: none; color: red">
+                              Please select a leave type.
+                            </p>
+                            <p
+                              id="ferrmessage"
+                              style="display: none"
+                              class="text-danger"
+                            >
+                              hello
+                            </p>
+                          </div>
+
+                          <div
+                            id="msecondDropdown"
+                            style="display: none"
+                            class="form-group col-md-12"
+                          >
+                            <label for="inputSecondDropdown"
+                              >Second Dropdown</label
+                            >
+                            <select id="msecondInputState" class="form-control">
+                              <option value="none" selected>
+                                Select a Leave Type
+                              </option>
+                              <option value="casualLeave">
+                                Casual Leave(CL)
+                              </option>
+                              <option value="holidayPermission">
+                                Holiday Permission(HPL)
+                              </option>
+                              <option value="governmentHoliday">
+                                Government Holiday(GH)
+                              </option>
+                              <option value="restrictedLeave">
+                                Restricted Holiday(RH)
+                              </option>
+                            </select>
+                            <p id="smmessage" style="display: none; color: red">
+                              Please select a leave type.
+                            </p>
+                            <p
+                              id="serrmessage"
+                              style="display: none"
+                              class="text-danger"
+                            >
+                              hello
+                            </p>
+                          </div>
+
+                          <div class="form-group col-12">
+                            <label for="inputAddress"
+                              >Describe your Reason</label
+                            >
+                            <textarea
+                              name="Reason"
+                              id="mreason"
+                              cols="40"
+                              rows="3"
+                              class="form-control"
+                            ></textarea>
+                          </div>
+
+                          <div class="form-group col-12">
+                            <label for="upload"
+                              >Upload File(.jpg,jpeg,pdf,word)</label
+                            ><br />
+                            <input type="file" id="mfileInput" />
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          onclick="uploadMultipleDetails()"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.row (main row) -->
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <footer class="main-footer">
+        <strong
+          >Copyright &copy; 2023-2024
+          <a href="employee.html">IRBN-PP</a>.</strong
+        >
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block"></div>
+      </footer>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+
+      <!-- /.control-sidebar -->
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+    <!-- jQuery -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <!-- jQuery UI 1.11.4 -->
+    <!-- <script src="plugins/jquery-ui/jquery-ui.min.js"></script> -->
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <!-- <script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script> -->
+    <!-- <script src="../public/plugins/datatables/jquery.dataTables.min.js"></script> -->
+
+    <!-- Bootstrap 4 -->
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <!-- <script src="plugins/chart.js/Chart.min.js"></script> -->
+    <!-- Sparkline -->
+    <!-- <script src="plugins/sparklines/sparkline.js"></script> -->
+    <!-- JQVMap -->
+    <!-- <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script> -->
+    <!-- jQuery Knob Chart -->
+    <!-- <script src="plugins/jquery-knob/jquery.knob.min.js"></script> -->
+    <!-- daterangepicker -->
+    <!-- <script src="plugins/moment/moment.min.js"></script> -->
+    <!-- <script src="plugins/daterangepicker/daterangepicker.js"></script> -->
+    <!-- Tempusdominus Bootstrap 4 -->
+    <!-- <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script> -->
+    <!-- Summernote -->
+    <!-- <script src="plugins/summernote/summernote-bs4.min.js"></script> -->
+    <!-- overlayScrollbars -->
+    <!-- <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../dist/js/adminlte.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../plugins/jszip/jszip.min.js"></script>
+    <script src="../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+      integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="../employee.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Add a click event listener to the "Single" link
+        $("#single-link").click(function () {
+          // Change the heading text to "Single Form"
+          $("#heading").text("Single Day Form");
+        });
+
+        // Add a click event listener to the "Multiple" link
+        $("#multiple-link").click(function () {
+          // Change the heading text to "Multiple Form"
+          $("#heading").text("Multiple Day Form");
+        });
+      });
+    </script>
+
+    <!-- <script>
+      $(document).ready(function () {
+          // Hide the additional info boxes initially
+          $('.info-box-hidden').hide();
+
+          // Toggle the additional info boxes when the arrow is clicked
+          $('.info-box-down-arrow').click(function () {
+              const hiddenBoxes = $(this).siblings('.info-box-hidden');
+              hiddenBoxes.slideToggle();
+              // Toggle the arrow icon
+              const arrowIcon = $(this).find('i');
+              arrowIcon.toggleClass('fa-chevron-down fa-chevron-up');
+          });
+
+          // Close the additional info boxes when clicking anywhere on the page
+          $(document).click(function (e) {
+              if (!$(e.target).closest('.info-box').length) {
+                  $('.info-box-hidden').slideUp();
+                  // Reset arrow icons to down
+                  $('.info-box-down-arrow i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+              }
+          });
+      });
+  </script> -->
+    <script>
+      // Get the elements
+      const infoBox1 = document.getElementById("info-box-1");
+      const infoBoxes1 = document.getElementById("info-boxes-1");
+
+      let isOpen = false; // Track whether the info boxes are open or closed
+      const maxHeight = "1000px"; // Set a value greater than the expected height
+
+      // Toggle the visibility of info boxes with sliding animation
+      infoBox1.addEventListener("click", () => {
+        if (isOpen) {
+          infoBoxes1.style.maxHeight = "0";
+          isOpen = false;
+        } else {
+          infoBoxes1.style.maxHeight = maxHeight;
+          isOpen = true;
+        }
+      });
+    </script>
+  </body>
+</html>
