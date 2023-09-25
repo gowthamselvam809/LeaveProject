@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async event=>{
             if(request.request.length > 1){
                 request.request.sort((a, b) => new Date(b.date) - new Date(a.date));
             }
-            allRequest.push([s,dateFormat(req.fromDate),dateFormat(req.toDate),date_diff(req.fromDate,req.toDate)+1,req.leaveType, req.reason, 'pending',req.fileName?`<a href="/documents/${req.fileName}">View<a/>`:'no attachments']);
+            allRequest.push([s,dateFormat(req.fromDate),dateFormat(req.toDate),date_diff(req.fromDate,req.toDate)+1,req.leaveType, req.reason, req.status,req.fileName?`<a href="/documents/${req.fileName}">View<a/>`:'no attachments']);
             s++;
         }
 

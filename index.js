@@ -52,7 +52,7 @@ dotenv.config();
           res.render('later.html');
         })
         app.get('/dash',(req,res)=>{
-            res.render('index.html')
+            res.render('dashboard.html')
         })
         app.get('/user',(req,res)=>{
             res.render('data.html')
