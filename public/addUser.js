@@ -41,7 +41,6 @@ async function create(){
     const phoneNumber = $('#phone').val();
     const alternateNumber = $('#alternate').val();
     let isActive = $('#isActive').val();
-    isActive = isActive == '1'? true : false;
     const accesstype = $('#accessType').val();
     console.log(policetype)
     const data = {

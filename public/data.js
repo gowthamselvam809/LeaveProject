@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', async event=>{
     const token = sessionStorage.getItem('token');
     const deleteUser = sessionStorage.getItem('delete');
 
+    // const preloader = document.querySelector('.preloader');
+    // preloader.style.display = 'flex';
+
     if(deleteUser == 'true'){
         toastr.success("User Deleted successfully...");
         sessionStorage.removeItem('delete');
@@ -20,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async event=>{
         })
         const userData = data.data;
         const bklid = data.bklid;
-        console.log(data)
+        // console.log(data)
         // const allRequest = [];
         const allUser = [];
 
@@ -31,10 +34,11 @@ document.addEventListener('DOMContentLoaded', async event=>{
                 document.getElementById('info').innerHTML = `<a href="/profile" class="d-block">${req.name}</a>`
             }
             console.log(req.toDate- req.fromDate)
-            allUser.push([s,req.name,req.bklid,req.policetype,`<input type='button' onClick="openUserProfile(${req.bklid})" value='Profile'/>`, `<input type='button' onClick="individualRequest(${req.bklid})" value="View"/>`]);
+            allUser.push([s,req.name,req.bklid,req.policetype,`<input type='button' onClick="openUserProfile('${req.bklid}')" value='Profile'/>`, `<input type='button' onClick="individualRequest('${req.bklid}')" value="View"/>`]);
             s++;
         }
-        console.log(allUser)
+        // console.log(allUser)
+        // preloader.style.display = 'none';
         const tableOptions = {
             "paging": true,
             "lengthChange": false,
@@ -49,7 +53,6 @@ document.addEventListener('DOMContentLoaded', async event=>{
                 }
             }
         }
-
 
         const employeeTable = $('#employeeTable').DataTable(tableOptions);
         employeeTable.clear().rows.add(allUser).draw();

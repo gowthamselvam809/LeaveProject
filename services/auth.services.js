@@ -24,7 +24,7 @@ module.exports = {
             return {
               name: user.name,
               password: password, 
-              bklid: user.bklid,
+              bklid: `${user.bklid}`,
               accesstype: "normal",
               policetype: user.policetype,
               isActive: true,
@@ -32,16 +32,16 @@ module.exports = {
               leave: leave,
               DOB: user.dob ? user.dob : "",
               email: user.email ? user.email : "",
-              phoneNumber: user.phoneNumber,
-              alternateNumber: user.alternateNumber,
-              COY: user.COY,
+              phoneNumber: `${user.phoneNumber}`?`${user.phoneNumber}`:"",
+              alternateNumber: `${user.alternateNumber}`?`${user.alternateNumber}`:"",
+              COY: user.COY?user.COY:"",
               address: "",
               createdDate: new Date(),
               editedDate: new Date(),
             };
           }));
       
-          await this.users.insertMany(usersToInsert);
+          await this.police.insertMany(usersToInsert);
       
           res.json({ message: "Users created successfully" });
         } catch (error) {
@@ -76,16 +76,16 @@ module.exports = {
                     name : name, 
                     password : password,
                     bklid : bklid,
-                    accesstype : "normal",
+                    accesstype : "admin",
                     policetype : req.body.policetype?req.body.policetype:"",
                     isActive: true,
                     request : [],
                     leave : leave,
-                    DOB : req.body.dob ? req.body.dob : null,
-                    email : req.body.email ? req.body.email : null,
-                    phoneNumber : req.body.phoneNumber?req.body.phoneNumber:null,
+                    DOB : req.body.dob ? req.body.dob : '',
+                    email : req.body.email ? req.body.email : '',
+                    phoneNumber : req.body.phoneNumber?req.body.phoneNumber:'',
                     address : req.body.address?req.body.address:"",
-                    alternateNumber : req.body.alternateNumber?req.body.alternateNumber:null,
+                    alternateNumber : req.body.alternateNumber?req.body.alternateNumber:'',
                     COY : req.body.COY?req.body.COY:"",
                     
                     createdDate: new Date(),
@@ -131,7 +131,7 @@ module.exports = {
     //delete user
     async deleteUser(req, res) {
         try {
-            await this.users.deleteOne({ bklid: req.body.bklid })
+            await this.police.deleteOne({ bklid: req.body.bklid })
             res.json({ message: "user deleted" })
         } catch (error) {
             console.log(error)

@@ -173,6 +173,7 @@ document.addEventListener('DOMContentLoaded', async event=>{
         document.getElementById('deluser').classList.add('d-none');
       }
       } else {
+        console.log(userData)
        data = userData[0];
        if(userData[0].accesstype == 'admin'){
         document.getElementById('deluser').classList.remove('d-none');

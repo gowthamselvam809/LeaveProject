@@ -47,19 +47,19 @@ module.exports = {
           };
           console.log(req.body)
         let password = await bcrypt.hash(`${user.phoneNumber}`, await bcrypt.genSalt(2)); 
-          await this.users.insertOne({
+          await this.police.insertOne({
             name: user.name,
             password: password, 
-            bklid: user.bklid,
-            accesstype: user,
+            bklid: `${user.bklid}`,
+            accesstype: user.accesstype,
             policetype: user.policetype,
             isActive: user.isActive=='true'?true:false,
             request: [],
             leave: leave,
             DOB: user.dob ? user.dob : "",
             email: user.email ? user.email : "",
-            phoneNumber: user.phoneNumber,
-            alternateNumber: user.alternateNumber,
+            phoneNumber: `${user.phoneNumber}`?`${user.phoneNumber}`:"",
+            alternateNumber: `${user.alternateNumber}`?`${user.alternateNumber}`:"",
             COY: user.COY?user.COY:"",
             address: user.email?user.email:"",
             createdDate: new Date(),
@@ -85,8 +85,9 @@ module.exports = {
     async getPoliceManWithBklid(req,res){
         try {
             const bklid = req.params.bklid;
-            // console.log(req.user.bklid)
+            console.log(req.params.bklid)
             let data = await this.police.find({ bklid: bklid }).toArray();
+            console.log(data)
             res.json({data:data,bklid: req.user.bklid})
         } catch (error) {
             console.log(error)

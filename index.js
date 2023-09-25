@@ -34,12 +34,7 @@ dotenv.config();
 
         //logging middleware
         app.use(logging);
-
-        app.post('/updateUser', async(req,res)=>{
-          await this.police.insertMany()
-        })
-
-
+        
         //Front End Page Calls
         app.get('/log', (req,res)=>{
             res.render('login.html');
