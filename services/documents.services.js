@@ -23,7 +23,7 @@ module.exports ={
     
     async pushRequest(req, res) {
         try {
-            let requestId = ('IR'+ Math.floor(Math.random()*100)+Math.random().toString(36).substr(2, 4)).toUpperCase();
+            let requestId = ('IR'+ Math.floor(Math.random()*100)+Math.random().toString(36).substr(2, 4)).toUpperCase(); 
             const requestData = {
                 requestId: requestId,
                 originalName:  req.file ? req.file.originalname : null,
@@ -39,6 +39,7 @@ module.exports ={
                 info : "",
                 updateStatus : '',
                 remarks : '',
+                weekendDays : req.body.weekendDays?req.body.weekendDays:0,
             };
             console.log(requestData)
             const name = await this.police.findOne({bklid : req.user.bklid});
@@ -79,18 +80,36 @@ module.exports ={
             const toDate = req.body.toDate;
             const requestId = req.body.requestId;
             const bklid = req.body.bklid;
-            const dayCount = req.body.dayCount;
+            let dayCount = req.body.dayCount;
             const leaveType = req.body.leaveType;
+            let weekendDays;
+            if(leaveType === 'casualLeave'){
+              weekendDays = req.body.weekendDays;
+            }
             console.log(bklid,requestId,fromDate)
             let request = await this.police.find({ bklid: req.body.bklid }).toArray();
-
-            
             if(request && request.length > 0){
               let curLeave;
               switch (leaveType){
                 case 'casualLeave' :
-                  curLeave = request[0].leave.casualLeave - dayCount;
-                  await this.police.updateOne({bklid : bklid},{$set : {'leave.casualLeave' : curLeave}})
+                  console.log("before"+dayCount, weekendDays);
+                  curLeave = dayCount;
+                  if(weekendDays > 0 && request[0].leave.holidayPermission > 0 ){
+                    if(request[0].leave.holidayPermission >= weekendDays){
+                      curLeave = curLeave - weekendDays;
+                    }else{
+                      weekendDays = weekendDays - request[0].leave.holidayPermission;
+                      curLeave = curLeave - weekendDays;
+                    }
+                  }else{  
+                    weekendDays = 0;
+                  }
+                  console.log("after "+curLeave, weekendDays);
+
+                  curLeave = request[0].leave.casualLeave  - curLeave;
+                  weekendDays = request[0].leave.holidayPermission - weekendDays;
+
+                  await this.police.updateOne({bklid : bklid},{$set : {'leave.casualLeave' : curLeave,'leave.holidayPermission' : weekendDays}})
                   break;
                 case 'medicalLeave' :
                   curLeave = request[0].leave.medicalLeave - dayCount;
@@ -128,6 +147,7 @@ module.exports ={
                 }
                 return requestItem;
               });
+
               await this.police.updateOne(
                 { bklid: bklid},
                 { $set: { request: updatedRequests} }
@@ -142,6 +162,7 @@ module.exports ={
                   for : "normal",
                   mDate : new Date(),
                   status : 'Approved',
+                  adminSeen : true
                 }
               });
 
@@ -179,6 +200,7 @@ module.exports ={
                 for : "normal",
                 mDate : new Date(),
                 status : 'Denied',
+                adminSeen : true,
               }
             })
           // res.json({approve:true});
@@ -188,7 +210,8 @@ module.exports ={
           // res.json({approve : false});
         }
       }catch(err){
-        console.log(err)
+        console.log(err);
+        res.status(500).json({ message: 'Error denying request data' });
       }
     },
 }

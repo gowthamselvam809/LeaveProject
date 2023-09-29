@@ -16,31 +16,19 @@ eg data
     },
 ]
 
+ADMIN
+
+login credentials {
+    bklid : 8105,
+    password : aszx
+}
+
 signUp: method post "http://localhost:3001/auth/signup"
 the below data format needs to be passed in req.body
-{
-    "name": "user",
-    "bklid": "122",
-    "password": "user"
-}
 
-signIp: method post "http://localhost:3001/auth/signin"
-the below data format needs to be passed in req.body
-{
-    "bklid": "122",
-    "password": "user"
-}
 
-deleteUser : method delete "http://localhost:3001/auth/deleteuser"
-req.body:{
-     "bklid":"1111"
-}
-
-deactivateuser :methos put "http://localhost:3001/auth/deactivate"
-req.body:{
-     "bklid":"1111"
-}
-activateuser :methos put "http://localhost:3001/auth/activate"
-req.body:{
-     "bklid":"1111"
-}
+MONGO_URL=mongodb+srv://gowthamselvam:irbndb@cluster0.ysut7hf.mongodb.net/?retryWrites=true&w=majority
+MONGO_NAME=irbndb
+port=3001
+JWT_KEY=KeyToUnlocktheDBFromTheUsers
+JWT_EXPIRY=8h

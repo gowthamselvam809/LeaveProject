@@ -1,4 +1,4 @@
-const { valid } = require("joi");
+// const { valid } = require("joi");
 const bcrypt = require('bcryptjs');
 
 
@@ -29,11 +29,9 @@ module.exports = {
             res.status(500).json({ message: "error fetching police mans" })
         }
     },
-
     async createPoliceMan(req, res) {
         try {
             // await this.police.insertOne({ ...req.body, createdDate: new Date(), editedDate: new Date() })
-
         const user = req.body; 
           const leave = {
             casualLeave: 10,

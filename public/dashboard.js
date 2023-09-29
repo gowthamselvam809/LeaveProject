@@ -243,13 +243,14 @@ const token = sessionStorage.getItem('token')
         for(let user of data.data){
           if(user.bklid == bklid){
             const name = user.name;
-            const phone = user.mobile_no;
+            const phone = user.phoneNumber;
             if (user.request && user.request.length) {
               for (let i = 0; i < user.request.length; i++){
                 let r = user.request[i];
                 if(r.requestId == reqId){
                   const fromDate = dateSeq(r.fromDate);
                   const toDate = dateSeq(r.toDate);
+                  const files = r.fileName ? `<a href="/documents/${r.fileName}" target="_blank">View File</a>` : 'no Attachments'
                   const details = `
                   <tr>
                     <th><label for="name">Name</label></th>
@@ -280,25 +281,30 @@ const token = sessionStorage.getItem('token')
                       <td><textarea name="reason" id="reason" cols="25" disabled>${r.reason}</textarea></td>
                   </tr>
                   <tr>
+                      <th><label for="name">Status</label></th>
+                      <td><input type="status" name="" id="status" value="${r.status}" disabled></td>
+                  </tr>
+                  <tr>
                       <th><label for="name">Attached File</label></th>
-                      <tr><a href="/documents/${r.fileName}" target="_blank">View File</a></tr>
+                      <tr>${files}</tr>
                   </tr>`;
 
                   
                   let condition;
 
-                  if(r.status == 'Approved'){
-                    condition = `<input type="button" name="button" id="button" value="Deny" class="btn btn-danger" onclick="deny('${reqId}','${bklid}')">`
-                  }else if(r.status === 'Denied'){
-                    condition = `<input type="button" name="button" id="button" value="Approve" class="btn btn-warning" onclick="approve('${reqId}','${bklid}')">`
-                  }else{
-                    condition = `<input type="button" name="button" id="button" value="Approve" class="btn btn-warning" onclick="approve('${reqId}','${bklid}')">&nbsp;&nbsp;
-                    <input type="button" name="button" id="button" value="Deny" class="btn btn-danger" onclick="deny('${reqId}','${bklid})'">`
+                  // if(r.status == 'Approved'){
+                  //   condition = '';
+                  // }else if(r.status === 'Denied'){
+                  //   condition = ``
+                  // }
+                  if(r.status == 'pending'){
+                    condition = `
+                    <input type="button" name="button" id="button" value="Modify" class="btn btn-primary" onclick="modify()">&nbsp;&nbsp;<input type="button" name="button" id="button" value="Approve" class="btn btn-warning" onclick="approve('${reqId}','${bklid}')">&nbsp;&nbsp;
+                    <input type="button" name="button" id="button" value="Deny" class="btn btn-danger" onclick="deny('${reqId}','${bklid}')"><br>`
                   }
                   const beforebutton = `
-                  <input type="button" name="button" id="button" value="Modify" class="btn btn-primary" onclick="modify()">&nbsp;&nbsp;
                     ${condition}
-                  <br>`
+                  `
 
                   const afterbutton = `
                   <input type="button" name="button" id="button" value="Save" class="btn btn-success" onclick="save()" >&nbsp;&nbsp;
@@ -357,11 +363,15 @@ const token = sessionStorage.getItem('token')
         try {
           const date = document.getElementById('date').value;
           let [fromDate, toDate] = date.split(' - ');
-          const leaveType = document.getElementById('leave_type').value;
+          let leaveType = document.getElementById('leave_type').value;
           fromDate = new Date(fromDate);
           toDate = new Date(toDate);
-          const dayCount = date_diff(fromDate, toDate) + 1;
-      
+          let dayCount = date_diff(fromDate, toDate) + 1;
+          const weekendDays = countWeekendDays(fromDate, toDate);
+          if(leaveType == 'earnedLeave'){
+            dayCount = earnedLeaveCount(fromDate,toDate, dayCount);
+          }
+
           await $.ajax({
             url: '/document/approveRequest',
             method: 'POST',
@@ -375,6 +385,7 @@ const token = sessionStorage.getItem('token')
               toDate: toDate,
               dayCount: dayCount,
               leaveType : leaveType,
+              weekendDays : weekendDays,
             },
             dataType: 'json', 
             success: function (response) {
@@ -395,6 +406,7 @@ const token = sessionStorage.getItem('token')
       }
       
       function deny(requestId, bklid) {
+        console.log('first')
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
             confirmButton: 'btn btn-success',
@@ -496,3 +508,44 @@ const token = sessionStorage.getItem('token')
         return `${monthsDifference} months`;
     }
 }
+
+
+
+function countWeekendDays(startDate, endDate) {
+  let count = 0;
+  let currentDate = new Date(startDate);
+  endDate = new Date(endDate);
+ 
+  while (currentDate <= endDate) {
+    const dayOfWeek = currentDate.getDay(); 
+ 
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      count++;
+    }
+     currentDate.setDate(currentDate.getDate() + 1);
+  }
+ 
+  return count;
+ }
+ 
+ 
+
+ function earnedLeaveCount(startDate, endDate, dayCount) {
+  let currentDate = new Date(startDate);
+  endDate = new Date(endDate); 
+    const currdayOfWeek = currentDate.getDay(); 
+    const enddayOfWeek = endDate.getDay(); 
+    
+    if (currdayOfWeek === 0 ) {
+      dayCount -= 1;
+    }else if(currdayOfWeek === 6){
+        dayCount -= 2;
+    }
+    if (enddayOfWeek === 0 ) {
+      dayCount -=2;
+    }else if(enddayOfWeek === 6){
+        dayCount -= 1;
+    }
+    
+  return dayCount;
+ }

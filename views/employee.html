@@ -236,7 +236,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               <span class="dropdown-item dropdown-header" id="ihead"
-                >15 Notifications</span
+                ></span
               >
               <div class="dropdown-divider"></div>
               <div id="notify"></div>
@@ -325,6 +325,14 @@
                 <a  class="nav-link active">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Apply Leave</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/calendar" class="nav-link">
+                  <i class="nav-icon fas fa-calendar"></i>
+                  <p>
+                    Calendar
+                  </p>
                 </a>
               </li>
               <li class="nav-item">
@@ -598,8 +606,12 @@
                             <select
                               id="oneinputState"
                               class="form-control"
-                              onchange="showSecondDropdown()"
                             >
+                            <!-- <select
+                              id="oneinputState"
+                              class="form-control"
+                              onchange="showSecondDropdown()"
+                            > -->
                               <option value="none" selected>
                                 Choose the Leave Type
                               </option>
@@ -626,10 +638,11 @@
                               id="sferrmessage"
                               style="display: none"
                               class="text-danger"
-                            ></p>
+                            >
+                          </p>
                           </div>
 
-                          <div
+                          <!-- <div
                             id="onesecondDropdown"
                             style="display: none"
                             class="form-group col-md-12"
@@ -671,7 +684,7 @@
                             >
                               hello
                             </p>
-                          </div>
+                          </div> -->
 
                           <div class="form-group col-12">
                             <label for="oneinputAddress"
@@ -726,8 +739,13 @@
                             <select
                               id="minputState"
                               class="form-control"
-                              onchange="showSecondDropdown()"
+                             
                             >
+                            <!-- <select
+                              id="minputState"
+                              class="form-control"
+                              onchange="showSecondDropdown()"
+                            > -->
                               <option value="none" selected>
                                 Choose the Leave Type
                               </option>
@@ -752,17 +770,17 @@
                               style="display: none"
                               class="text-danger"
                             >
-                              hello
+                              
                             </p>
                           </div>
 
-                          <div
+                          <!-- <div
                             id="msecondDropdown"
                             style="display: none"
                             class="form-group col-md-12"
                           >
                             <label for="inputSecondDropdown"
-                              >Second Dropdown</label
+                              >Casual Leave</label
                             >
                             <select id="msecondInputState" class="form-control">
                               <option value="none" selected>
@@ -791,7 +809,7 @@
                             >
                               hello
                             </p>
-                          </div>
+                          </div> -->
 
                           <div class="form-group col-12">
                             <label for="inputAddress"

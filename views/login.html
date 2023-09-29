@@ -15,16 +15,113 @@
 
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <!-- <style>
+    .login-logo {
+  text-align: center;
+  position: relative;
+}
 
+.login-logo img {
+  opacity: 0; /* Initially, make the logo invisible */
+  animation: fadeIn 1s forwards; /* Fade in the logo */
+}
+
+.login-logo a {
+  position: relative;
+  left: -100px; /* Initially, move the text to the left */
+  transition: left 1s ease-in-out; /* Smoothly transition the text */
+}
+
+/* Define a keyframes animation to fade in the logo */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Create a class to trigger the text transition */
+.show-text {
+  left: 0;
+}
+
+  </style> -->
   
+  <style>
+    .login-logo {
+  text-align: center;
+  position: relative;
+}
+
+.login-logo img {
+  position: relative;
+  left: 0; /* Initially, keep the image centered */
+  opacity: 0; /* Initially, make the image invisible */
+  animation: centerThenMoveLeft 1s forwards;
+}
+
+.login-logo a {
+  
+  /* transition: left 1s ease-out; */
+  /* animation: moveLeft 1s 1s forwards; */
+  position: relative;
+  animation: mymove 1s ;
+  animation-delay: 0s;
+}
+
+@keyframes mymove {
+  from {left: 50%;}
+  to {left: 0%;}
+}
+
+
+
+/* Define a keyframes animation to center the image and fade it in */
+@keyframes centerThenMoveLeft {
+  0% {
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  100% {
+    left: 0;
+    opacity: 1;
+  }
+}
+
+/* Define a keyframes animation to move the text to the left */
+@keyframes moveLeft {
+  to {
+    left: -100px; /* Adjust the distance to move */
+  }
+}
+.gradient-text {
+  background: linear-gradient(to right, blue ,red);
+  -webkit-background-clip: text; 
+  color: transparent; 
+  display: inline-block;
+}
+.form-control {
+  height: 50px; 
+  border-radius: 20px;
+}
+.icon{
+  border-radius: 20px;
+}
+
+.btn{
+  border-radius: 20px;
+}
+
+  </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  <div class="login-logo">
-    <a href=""><b class="text-bold">IRBN </b> Police</a>
+  <div class="login-logo ">
+    <img src="../assets/pypolice.png" alt="logo" width="80px" >
+    <a ><b class="text-bold gradient-text">IRBN </b> Police</a>
   </div>
   <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
+  <div class="card card-outline card-primary shadow">
     <div class="card-header text-center">
       <a class="h1"><b>Login</b></a>
     </div>
@@ -33,21 +130,25 @@
 
       <!-- <form action="/auth/signin" method="post"> -->
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Buckle ID" name="bklid" id="bklid">
+          <input type="text" class="form-control" placeholder="Buckle ID" oninput="validateInput(this)" name="bklid" id="bklid">
           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+            <div class="input-group-text icon">
+              <span class="fas fa-envelope "></span>
             </div>
           </div>
         </div>
+        <p class="text-sm text-danger d-none" id="errbklid"></p>
+
+        </p>
         <div class="input-group mb-3">
           <input type="password" class="form-control" placeholder="Password" name="password" id="password">
           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+            <div class="input-group-text icon">
+              <span class="fas fa-lock "></span>
             </div>
           </div>
         </div>
+        <p class="text-sm text-danger d-none" id="errpw"></p>
         <div class="row">
           <!-- <div class="col-8">
             <div class="icheck-primary">
@@ -58,8 +159,8 @@
             </div>
           </div> -->
           <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block" onclick="handleLogin()">Sign In</button>
+          <div class="col-12 mt-2">
+            <button type="submit" class="btn btn-primary btn-block" onclick="handleLogin()">Log In</button>
           </div>
           <!-- /.col -->
         </div>
@@ -81,7 +182,8 @@
       <!-- <p class="mb-0">
         <a href="pages/examples/register.html" class="text-center">Register a new membership</a>
       </p> -->
-      <div id="e-status" class="d-none text-center text-bold h4"></div>
+      <div id="e-status" class="d-none text-center text-bold h4 mt-2"></div>
+      <p class="text-sm text-danger d-none mt-2" id="errstatus"> </p>
     </div>
     <!-- /.card-body -->
   </div>
@@ -98,5 +200,12 @@
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
 <script src="./login.js"></script>
+<script>
+  // Add this JavaScript code to trigger the text transition after a delay
+setTimeout(function() {
+  document.querySelector('.login-logo a').classList.add('show-text');
+}, 1000); // Adjust the delay (in milliseconds) as needed
+
+</script>
 </body>
 </html>

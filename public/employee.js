@@ -48,26 +48,26 @@ $(function() {
   });
 });
 
-function showSecondDropdown() {
-  const oneleaveTypeSelect = document.getElementById("oneinputState");
-  console.log(oneleaveTypeSelect.value);
-  const mleaveTypeSelect = document.getElementById("minputState");
-  const onesecondDropdown = document.getElementById('onesecondDropdown')
-  const msecondDropdown = document.getElementById('msecondDropdown')
+// function showSecondDropdown() {
+//   const oneleaveTypeSelect = document.getElementById("oneinputState");
+//   console.log(oneleaveTypeSelect.value);
+//   const mleaveTypeSelect = document.getElementById("minputState");
+//   const onesecondDropdown = document.getElementById('onesecondDropdown')
+//   const msecondDropdown = document.getElementById('msecondDropdown')
   
 
-  if (oneleaveTypeSelect.value === "casualLeave") {
-      onesecondDropdown.style.display = "block";
-  } else {
-      onesecondDropdown.style.display = "none";
-  }
+//   if (oneleaveTypeSelect.value === "casualLeave") {
+//       onesecondDropdown.style.display = "block";
+//   } else {
+//       onesecondDropdown.style.display = "none";
+//   }
 
-  if(mleaveTypeSelect.value === "casualLeave"){
-    msecondDropdown.style.display = "block"
-  }else{
-    msecondDropdown.style.display = "none";
-  }
-}
+//   if(mleaveTypeSelect.value === "casualLeave"){
+//     msecondDropdown.style.display = "block"
+//   }else{
+//     msecondDropdown.style.display = "none";
+//   }
+// }
 
 function toggleForm(formType) {
   const singleLeaveBtn = document.getElementById('singleLeaveBtn');
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', async event=>{
         }
         const recentNotifications = notification.slice(0, 5);
         for(let not of recentNotifications){
-          console.log(not.employeeSeen)
+          console.log(not)
           if(not.adminSeen){
             const time = timings(not.mDate);
             if(not.status == 'Approved'){
@@ -247,22 +247,23 @@ document.addEventListener('DOMContentLoaded', async event=>{
         console.log('ur option selected')
       }
 
-      if(leaveValue === "casualLeave"){
-        const smessageElement = document.getElementById('smmessage');
-        const sleaveValue = document.getElementById('msecondInputState').value;
-        if(sleaveValue === "none"){
-          smessageElement.style.display = 'block';
-          return;
-        }else{
-          leaveType = sleaveValue;
-          smessageElement.style.display = 'none';
-          console.log('ur option selected')
-        }
-      }
+      // if(leaveValue === "casualLeave"){
+      //   const smessageElement = document.getElementById('smmessage');
+      //   const sleaveValue = document.getElementById('msecondInputState').value;
+      //   if(sleaveValue === "none"){
+      //     smessageElement.style.display = 'block';
+      //     return;
+      //   }else{
+      //     leaveType = sleaveValue;
+      //     smessageElement.style.display = 'none';
+      //     console.log('ur option selected')
+      //   }
+      // }
 
-      const dayCount = date_diff(fromDate,toDate) + 1;
+      let dayCount = date_diff(fromDate,toDate) + 1;
       const fmess = document.getElementById('ferrmessage');
-      const smess = document.getElementById('serrmessage');
+      // const smess = document.getElementById('serrmessage');
+      let weekendDays = countWeekendDays(new Date(fromDate),new Date(toDate));
 
       const leaveDays =  await $.get({
         url: '/police/getPolice',
@@ -273,12 +274,21 @@ document.addEventListener('DOMContentLoaded', async event=>{
       console.log(leaveValue)
       switch (leaveValue){
         case 'casualLeave' :
-          if(leaveDays[0].leave.casualLeave < dayCount){
-            smess.innerText = ` * Causal Leave has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} days leave`;
-            smess.style.display = 'block'
+
+          if(leaveDays[0].leave.holidayPermission > 0 ){
+            if(weekendDays > 0){
+              dayCount = dayCount - weekendDays;
+            }
+          }else{  
+            weekendDays = 0;
+          }
+          
+          if(leaveDays[0].leave.casualLeave < dayCount ){
+            fmess.innerText = ` * ${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave, If U have Holiday Permission Apply leave for saturday and Sunday  `;
+            fmess.style.display = 'block'
             return;
           }
-          smess.style.display = 'none'
+          // smess.style.display = 'none'
           fmess.style.display = 'none'
           break;
         case 'medicalLeave' :
@@ -287,53 +297,54 @@ document.addEventListener('DOMContentLoaded', async event=>{
             fmess.style.display = 'block'
             return;
           }
-          smess.style.display = 'none'
+          // smess.style.display = 'none'
           fmess.style.display = 'none'
           break;
-        case 'holidayPermission' :
-          if(leaveDays[0].leave.holidayPermission < dayCount){
-            smess.innerText = ` * Holiday Permission has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} days leave`;
-            smess.style.display = 'block'
-            return;
-          }
-          smess.style.display = 'none'
-          fmess.style.display = 'none'          
-          break;
-        case 'governmentHoliday' :
-          if(leaveDays[0].leave.governmentHoliday < dayCount){
-            smess.innerText = ` * Government Holiday has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} days leave`;
-            smess.style.display = 'block'
-            return;
-          }
-          smess.style.display = 'none'
-          fmess.style.display = 'none'
-          break;
-        case 'restrictedHoliday' :
-          if(leaveDays[0].leave.restrictedHoliday < dayCount){
-            smess.innerText = ` * Restricted Holiday has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} days leave`;
-            smess.style.display = 'block'
-            return;
-          }
-          smess.style.display = 'none'
-          fmess.style.display = 'none'
-          break;
+        // case 'holidayPermission' :
+        //   if(leaveDays[0].leave.holidayPermission < dayCount){
+        //     smess.innerText = ` * Holiday Permission has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} days leave`;
+        //     // smess.style.display = 'block'
+        //     return;
+        //   }
+        //   // smess.style.display = 'none'
+        //   fmess.style.display = 'none'          
+        //   break;
+        // case 'governmentHoliday' :
+        //   if(leaveDays[0].leave.governmentHoliday < dayCount){
+        //     smess.innerText = ` * Government Holiday has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} days leave`;
+        //     // smess.style.display = 'block'
+        //     return;
+        //   }
+        //   // smess.style.display = 'none'
+        //   fmess.style.display = 'none'
+        //   break;
+        // case 'restrictedHoliday' :
+        //   if(leaveDays[0].leave.restrictedHoliday < dayCount){
+        //     smess.innerText = ` * Restricted Holiday has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} days leave`;
+        //     // smess.style.display = 'block'
+        //     return;
+        //   }
+        //   // smess.style.display = 'none'
+        //   fmess.style.display = 'none'
+        //   break;
         case 'earnedLeave' :
+          dayCount = earnedLeaveCount(fromDate, toDate ,dayCount)
           if(leaveDays[0].leave.earnedLeave < dayCount){
-            fmess.innerText = ` * Earned Leave has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
+            fmess.innerText = ` * Earned Leave has ${leaveDays[0].leave.earnedLeave} leave, U can't apply ${dayCount} leave`;
             fmess.style.display = 'block'
             return;
           }
-          smess.style.display = 'none'
-          fmess.style.display = 'none'
+          // smess.style.display = 'none'
+          fmess.style.display = 'none';
           break;
         case 'paternityLeave' :
           if(leaveDays[0].leave.paternityLeave < dayCount){
-            fmess.innerText = ` * Paternity Leave has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
+            fmess.innerText = ` * Paternity Leave has ${leaveDays[0].leave.paternityLeave} leave, U can't apply ${dayCount} leave`;
             fmess.style.display = 'block'
             return;
           }
-          smess.style.display = 'none'
-          fmess.style.display = 'none'
+          // smess.style.display = 'none'
+          fmess.style.display = 'none';
           break;
       }
 
@@ -346,8 +357,11 @@ document.addEventListener('DOMContentLoaded', async event=>{
       formData.append('file', file);
       formData.append('fromDate', fromDate);
       formData.append('toDate',toDate);
+      if(leaveValue === 'casualLeave'){
+        formData.append('weekendDays',weekendDays);
+      }
       formData.append('dayCount',dayCount);
-      formData.append('leaveType',leaveType);
+      formData.append('leaveType',leaveValue);
       formData.append('reason',reason);
     
       const response = await fetch('/document/pushRequest', {
@@ -383,7 +397,7 @@ async function uploadSingleDetails() {
   try{
     const fileInput = document.getElementById('onefileInput');
     const file = fileInput.files[0];
-    console.log(file)
+    console.log(file);
     const dateRange = document.getElementById('oneday').value;
     const currDate = new Date();
     const fromDate = new Date(dateRange);
@@ -394,77 +408,89 @@ async function uploadSingleDetails() {
     console.log(leaveValue)
 
 
-    const dayCount = date_diff(fromDate,toDate) + 1;
+    let dayCount = date_diff(fromDate,toDate) + 1;
+    let weekendDays = countWeekendDays(new Date(fromDate),new Date(toDate));
+    
       const fmess = document.getElementById('sferrmessage');
-      const smess = document.getElementById('sserrmessage');
+      // const smess = document.getElementById('sserrmessage');
 
       const leaveDays =  await $.get({
         url: '/police/getPolice',
         headers: { 'Authorization': `Bearer ${token}`},
       })
+
+      
       console.log(leaveDays)
       switch (leaveValue){
         case 'casualLeave' :
+          if(leaveDays[0].leave.holidayPermission > 0 ){
+            if(weekendDays > 0){
+              dayCount = dayCount - weekendDays;
+            }
+          }else{  
+            weekendDays = 0;
+          }
           if(leaveDays[0].leave.casualLeave < dayCount){
-            smess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
-            smess.style.display = 'block'
+            fmess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave, If U have Holiday Permission Apply leave for saturday and Sunday`;
+            // smess.style.display = 'block'
             return;
           }
-          smess.style.display = 'none'
+          // smess.style.display = 'none'
           fmess.style.display = 'none'
           break;
         case 'medicalLeave' :
           if(leaveDays[0].leave.medicalLeave < dayCount){
-            fmess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
+            fmess.innerText = `${leaveValue} has ${leaveDays[0].leave.medicalLeave} leave, U can't apply ${dayCount} leave`;
             fmess.style.display = 'block'
             return;
           }
-          smess.style.display = 'none'
+          // smess.style.display = 'none'
           fmess.style.display = 'none'
           break;
-        case 'holidayPermission' :
-          if(leaveDays[0].leave.holidayPermission < dayCount){
-            smess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
-            smess.style.display = 'block'
-            return;
-          }
-          smess.style.display = 'none'
-          fmess.style.display = 'none'          
-          break;
-        case 'governmentHoliday' :
-          if(leaveDays[0].leave.governmentHoliday < dayCount){
-            smess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
-            smess.style.display = 'block'
-            return;
-          }
-          smess.style.display = 'none'
-          fmess.style.display = 'none'
-          break;
-        case 'restrictedHoliday' :
-          if(leaveDays[0].leave.restrictedHoliday < dayCount){
-            smess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
-            smess.style.display = 'block'
-            return;
-          }
-          smess.style.display = 'none'
-          fmess.style.display = 'none'
-          break;
+        // case 'holidayPermission' :
+        //   if(leaveDays[0].leave.holidayPermission < dayCount){
+        //     smess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
+        //     smess.style.display = 'block'
+        //     return;
+        //   }
+        //   smess.style.display = 'none'
+        //   fmess.style.display = 'none'          
+        //   break;
+        // case 'governmentHoliday' :
+        //   if(leaveDays[0].leave.governmentHoliday < dayCount){
+        //     smess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
+        //     smess.style.display = 'block'
+        //     return;
+        //   }
+        //   smess.style.display = 'none'
+        //   fmess.style.display = 'none'
+        //   break;
+        // case 'restrictedHoliday' :
+        //   if(leaveDays[0].leave.restrictedHoliday < dayCount){
+        //     smess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
+        //     smess.style.display = 'block'
+        //     return;
+        //   }
+        //   smess.style.display = 'none'
+        //   fmess.style.display = 'none'
+        //   break;
         case 'earnedLeave' :
+          dayCount = earnedLeaveCount(fromDate, toDate ,dayCount)
           if(leaveDays[0].leave.earnedLeave < dayCount){
-            fmess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
+            fmess.innerText = `${leaveValue} has ${leaveDays[0].leave.earnedLeave} leave, U can't apply ${dayCount} leave`;
             fmess.style.display = 'block'
             return;
           }
-          smess.style.display = 'none'
+          // smess.style.display = 'none'
           fmess.style.display = 'none'
           break;
         case 'paternityLeave' :
           if(leaveDays[0].leave.paternityLeave < dayCount){
-            fmess.innerText = `${leaveValue} has ${leaveDays[0].leave.casualLeave} leave, U can't apply ${dayCount} leave`;
+            fmess.innerText = `${leaveValue} has ${leaveDays[0].leave.paternityLeave} leave, U can't apply ${dayCount} leave`;
             fmess.style.display = 'block'
             return;
           }
-          smess.style.display = 'none'
+          // smess.style.display = 'none'
           fmess.style.display = 'none'
           break;
       }
@@ -482,26 +508,27 @@ async function uploadSingleDetails() {
       console.log('ur option selected')
     }
 
-    if(leaveValue === "casualLeave"){
-      const smessageElement = document.getElementById('sonemessage');
-      const sleaveValue = document.getElementById('onesecondInputState').value;
-      console.log(sleaveValue)
-      if(sleaveValue === "none"){
-        smessageElement.style.display = 'block';
-        return;
-      }else{
-        leaveType = sleaveValue;
-        smessageElement.style.display = 'none';
-        console.log('ur option selected')
-      }
-    }
+    // if(leaveValue === "casualLeave"){
+    //   const smessageElement = document.getElementById('sonemessage');
+    //   const sleaveValue = document.getElementById('onesecondInputState').value;
+    //   console.log(sleaveValue)
+    //   if(sleaveValue === "none"){
+    //     smessageElement.style.display = 'block';
+    //     return;
+    //   }else{
+    //     leaveType = sleaveValue;
+    //     smessageElement.style.display = 'none';
+    //     console.log('ur option selected')
+    //   }
+    // }
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('fromDate', fromDate);
     formData.append('toDate',toDate);
     formData.append('dayCount',dayCount);
-    formData.append('leaveType',leaveType);
+    formData.append('weekendDays',weekendDays);
+    formData.append('leaveType',leaveValue);
     formData.append('reason',reason);
   
     const response = await fetch('/document/pushRequest', {
@@ -561,3 +588,46 @@ function timings(upDate) {
       return `${monthsDifference} months`;
   }
 }
+
+
+function countWeekendDays(startDate, endDate) {
+  let count = 0;
+  let currentDate = new Date(startDate);
+ 
+  while (currentDate <= endDate) {
+    const dayOfWeek = currentDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+ 
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      // 0 or 6 corresponds to Sunday or Saturday
+      count++;
+    }
+ 
+    // Move to the next day
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+ 
+  return count;
+ }
+ 
+ 
+
+ function earnedLeaveCount(startDate, endDate,dayCount) {
+  let currentDate = new Date(startDate);
+  endDate = new Date(endDate); 
+    const currdayOfWeek = currentDate.getDay(); 
+    const enddayOfWeek = endDate.getDay(); 
+    console.log(currdayOfWeek, enddayOfWeek, dayCount)
+    
+    if (currdayOfWeek === 0 ) {
+      dayCount -= 1;
+    }else if(currdayOfWeek === 6){
+        dayCount -= 2;
+    }
+    if (enddayOfWeek === 0 ) {
+      dayCount -=2;
+    }else if(enddayOfWeek === 6){
+        dayCount -= 1;
+    }
+    
+  return dayCount;
+ }

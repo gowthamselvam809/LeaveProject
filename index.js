@@ -12,6 +12,7 @@ const authUsers = require('./routes/auth.routes');
 const polices = require('./routes/policeman.routes');
 const document = require('./routes/documents.routes');
 const notification = require('./routes/notification.routes');
+const events = require('./routes/events.routes');
 
 
 const app = express();
@@ -78,6 +79,9 @@ dotenv.config();
         app.get('/addUser', (req,res)=>{
           res.render('addUser.html')
         })
+        app.get('/calendar', (req,res)=>{
+          res.render('calendar.html')
+        })
 
         app.get('/documents/:fileName', (req, res) => {
             const fileName = req.params.fileName;
@@ -100,6 +104,9 @@ dotenv.config();
           });
 
         app.use('/auth', authUsers)
+        app.use('/event', events)
+
+
 
         app.use(jwtTokenValidation)
         

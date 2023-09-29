@@ -5,7 +5,7 @@ module.exports = {
     db: null,
     police:null,
     notification:null,
-    users:null,
+    events:null,
 
 
     async connect() {
@@ -22,7 +22,7 @@ module.exports = {
             //paths initilization
             this.police = await this.db.collection('policeman');
             this.notification = await this.db.collection('notification');
-            this.users = await this.db.collection('users');
+            this.events = await this.db.collection('events');
 
             const currentYear = new Date().getFullYear();
             const currentMonth = new Date().getMonth() + 1;

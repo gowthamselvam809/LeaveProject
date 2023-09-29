@@ -106,21 +106,21 @@ module.exports = {
             
             //user validation
             if (!isUser) {
-                return res.status(401).json({ message: "user not found", link: "http://localhost:3001/auth/signup" })
+                return res.status(401).json({ message: "user not found", link: "http://localhost:3001/auth/signup", isUser : false })
             }
 
             //pass validtion
             console.log(isUser.password)
             let isValid = await bcrypt.compare(password, isUser.password);
             if (!isValid) {
-                return res.status(401).json({ message: "password or bklid is incorrect" })
+                return res.status(401).json({ message: "password or bklid is incorrect", valid : false, isUser : true })
             }
 
             if (!isUser.isActive) {
-                return res.status(401).json({ message: "user is not active" })
+                return res.status(401).json({ message: "user is not active" , isActive : false, isUser: true, valid : true})
             } else {
                 let token = await jwt.sign({ bklid: isUser.bklid }, process.env.JWT_KEY, { expiresIn: process.env.JWT_EXPIRY })
-                return res.json({ message: "Login Success", token, accesstype : isUser.accesstype })
+                return res.json({ message: "Login Success", token , accesstype : isUser.accesstype })
             }
         } catch (error) {
             console.log(error)

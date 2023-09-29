@@ -3,95 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Info Box</title>
-    <!-- Include Bootstrap CSS and Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        .info-box {
-            position: relative;
-        }
-
-        .info-box-down-arrow {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-
-        .info-box-hidden {
-            display: none;
-        }
-    </style>
+    <title>FullCalendar Event Removal</title>
+    <!-- Include FullCalendar and jQuery -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="info-box">
-            <span class="info-box-icon bg-info">CL</span>
-            <div class="info-box-content">
-                <span class="info-box-text">Casual Leave</span>
-                <span class="info-box-number">10</span>
-            </div>
-            <div class="info-box-down-arrow">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-        <div class="info-box-hidden mt-2">
-            <!-- Info Box 1 -->
-            <div class="info-box">
-                <span class="info-box-icon bg-info">Info 1</span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Info Box 1</span>
-                    <span class="info-box-number">Content 1</span>
-                </div>
-            </div>
-            <!-- Info Box 2 -->
-            <div class="info-box">
-                <span class="info-box-icon bg-info">Info 2</span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Info Box 2</span>
-                    <span class="info-box-number">Content 2</span>
-                </div>
-            </div>
-            <!-- Info Box 3 -->
-            <div class="info-box">
-                <span class="info-box-icon bg-info">Info 3</span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Info Box 3</span>
-                    <span class="info-box-number">Content 3</span>
-                </div>
-            </div>
-        </div>
+    <div id="external-events">
+        <h4>Draggable Events</h4>
+        <div class="external-event" data-eventid="event1">Event 1 <span class="remove-event">x</span></div>
+        <div class="external-event" data-eventid="event2">Event 2 <span class="remove-event">x</span></div>
+        <div class="external-event" data-eventid="event3">Event 3 <span class="remove-event">x</span></div>
     </div>
-
-    <!-- Include Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <div id="calendar"></div>
 
     <script>
-        $(document).ready(function () {
-            // Hide the additional info boxes initially
-            $('.info-box-hidden').hide();
-
-            // Toggle the additional info boxes when the arrow is clicked
-            $('.info-box-down-arrow').click(function () {
-                const hiddenBoxes = $(this).siblings('.info-box-hidden');
-                hiddenBoxes.slideToggle();
-                // Toggle the arrow icon
-                const arrowIcon = $(this).find('i');
-                arrowIcon.toggleClass('fa-chevron-down fa-chevron-up');
+        $(document).ready(function() {
+            // Initialize the FullCalendar
+            var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+                initialView: 'dayGridMonth',
+                editable: true,
+                events: [
+                    // Sample events
+                    { id: 'event1', title: 'Event 1', start: '2023-09-10' },
+                    { id: 'event2', title: 'Event 2', start: '2023-09-15' },
+                    { id: 'event3', title: 'Event 3', start: '2023-09-20' }
+                ]
             });
 
-            // Close the additional info boxes when clicking anywhere on the page
-            $(document).click(function (e) {
-                if (!$(e.target).closest('.info-box').length) {
-                    $('.info-box-hidden').slideUp();
-                    // Reset arrow icons to down
-                    $('.info-box-down-arrow i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
-                }
+            calendar.render();
+
+            // Function to render events with a "Remove" button and make them draggable
+            function renderEventWithRemoveButton(event) {
+                var eventElement = $('<div />').addClass('external-event')
+                    .append(event.title)
+                    .append('<span class="remove-event">x</span>')
+                    .data('eventObject', event);
+
+                // Make the event draggable
+                eventElement.draggable({
+                    zIndex: 1070,
+                    revert: true,
+                    revertDuration: 0
+                });
+
+                return eventElement;
+            }
+
+            // Initialize events with "Remove" buttons and make them draggable
+            $('#external-events div.external-event').each(function() {
+                var eventId = $(this).data('eventid');
+                var event = {
+                    id: eventId,
+                    title: $.trim($(this).text())
+                };
+                var eventElement = renderEventWithRemoveButton(event);
+                $(this).replaceWith(eventElement);
+            });
+
+            // Handle event removal when clicking the "Remove" button
+            $('#external-events').on('click', '.remove-event', function() {
+                var eventElement = $(this).closest('.external-event');
+                var eventObject = eventElement.data('eventObject');
+                
+                // Remove the event from the calendar
+                calendar.getEventById(eventObject.id).remove();
             });
         });
     </script>
