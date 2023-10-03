@@ -14,7 +14,14 @@
   <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css"><link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+  integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+
   <style>
     a{
       cursor: pointer;
@@ -78,7 +85,7 @@
           <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info" id="info">
-          <!-- <a href="#" class="d-block">ManiKandan</a> -->
+          <!-- <a href="#" class="d-block"></a> -->
         </div>
       </div>
 
@@ -207,11 +214,9 @@
                     <th>Sl No.</th>
                     <th>From</th>
                     <th>To Date</th>
-                    <th>Days</th>
                     <th>Type</th>
                     <th>Status</th>
-                    <th>Reason</th>
-                    <th>Attachments</th>
+                    <th>Info</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -266,29 +271,11 @@
 <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script src="../dist/js/adminlte.min.js"></script>
 <script src="../singlerequest.js"></script>
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="../../dist/js/demo.js"></script> -->
-<!-- Page specific script -->
-<script>
-//   $(function () {
-//     $("#example1").DataTable({
-//       "responsive": true, "lengthChange": false, "autoWidth": false,
-//       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-//     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-//     $('#example2').DataTable({
-//       "paging": true,
-//       "lengthChange": false,
-//       "searching": false,
-//       "ordering": true,
-//       "info": true,
-//       "autoWidth": false,
-//       "responsive": true,
-//     });
-//   });
 
-  
-</script>
+
 </body>
 </html>

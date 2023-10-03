@@ -7,12 +7,10 @@ module.exports = {
     async getAllPoliceMan(req, res) {
         try {
             let userData = await this.police.find({ bklid: req.user.bklid }).toArray();
-            if(userData[0].accesstype === "admin" ){
+            
                 let data = await this.police.find().toArray();
                 res.json({data:data,bklid : req.user.bklid})
-            }else{
-                res.status(401).json({message : "your are not Admin. "})
-            }
+            
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: "error fetching police mans" })

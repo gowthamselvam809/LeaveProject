@@ -69,7 +69,7 @@ const handleLogin =async () => {
     } catch (err) {
         if (err.status === 401) {
             console.log(err)
-            console.log(err.responseJSON.message); // Log the error message
+            console.log(err.responseJSON.message);
             let errorMessageElement = document.getElementById('errbklid');
             if(!err.responseJSON.isUser){
                 errorMessageElement = document.getElementById('errbklid');
@@ -85,7 +85,7 @@ const handleLogin =async () => {
                 errorMessageElement = document.getElementById('e-status');
                 errorMessageElement.innerText = 'User Not Active, Contact Admin.'
                 errorMessageElement.classList.remove('d-none');
-                estat.classList.add('text-danger');
+                errorMessageElement.classList.add('text-danger ');
                 return;
             }
         } else {

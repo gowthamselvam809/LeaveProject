@@ -214,4 +214,26 @@ module.exports ={
         res.status(500).json({ message: 'Error denying request data' });
       }
     },
+
+    async deleteRequest(req,res){
+      try{
+        const bklid = req.body.bklid;
+        const requestId = req.body.requestId;
+
+        const data = await this.police.findOne({bklid : bklid});
+
+        console.log(data.request)
+        const updatedRequests = data.request.filter(requestItem => {
+          return requestItem.requestId !== requestId;
+        });
+        await this.police.updateOne(
+          { bklid: bklid},
+          { $set: { request: updatedRequests} }
+        );
+        res.status(200).json({message : "deleted the request"})
+      }catch(err){
+        console.log(err);
+        res.status(500).json({ message: 'Error denying request data' });
+      }
+    }
 }

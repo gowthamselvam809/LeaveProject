@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async event=>{
         }
         for(let req of requestData){
             
-            allRequest.push([s,dateFormat(req.fromDate),dateFormat(req.toDate),req.leaveType, req.reason, req.status]);
+            allRequest.push([s,dateFormat(req.fromDate),dateFormat(req.toDate),req.leaveType, req.status, `<button class="btn btn-primary rounded-circle" onClick="openReq('${req.bklid}','${req.requestId}')">Info</button>`]);
             s++;
         }
         console.log(allRequest)
@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', async event=>{
           }
     }
 });
+
+function openReq(bklid, reqId){
+    sessionStorage.setItem('reqId', reqId);
+    sessionStorage.setItem('bklid', bklid);
+    window.location.href = '/request'
+}
 
 var date_diff = function(date1, date2) {
     dt1 = new Date(date1);

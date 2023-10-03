@@ -68,13 +68,13 @@ const token = sessionStorage.getItem('token')
               const currentDate = new Date();
 
               // console.log(daysDifference);
-              if (r.status === "pending") {
+              if (r.status === "pending" && date_diff(r.date, new Date()) + 1 < 7 ) {
                 pendingReq.push([p, name, bklidreq, dateFormat(r.fromDate), dateFormat(r.toDate),date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}','${bklidreq}')" value="View"/>`]);
                 p++;
-              } else if (r.status === "Approved") {
+              } else if (r.status === "Approved"  && date_diff(r.date, new Date()) + 1 < 7) {
                 approvedReq.push([a, name, bklidreq, dateFormat(r.fromDate),dateFormat(r.toDate),date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}','${bklidreq}')" value="View"/>`]);
                 a++;
-              } else if(r.status==="Denied"){
+              } else if(r.status==="Denied" && date_diff(r.date, new Date()) + 1 < 7){
                 deniedReq.push([d, name, bklidreq, dateFormat(r.fromDate),dateFormat(r.toDate), date_diff(fromDate, toDate) + 1, `<input type='button' onClick="showUserInfoModal('${r.requestId}','${bklidreq}')" value="View"/>`]);
                 d++;
               }
@@ -290,7 +290,7 @@ const token = sessionStorage.getItem('token')
                   </tr>`;
 
                   
-                  let condition;
+                  let condition = '';
 
                   // if(r.status == 'Approved'){
                   //   condition = '';

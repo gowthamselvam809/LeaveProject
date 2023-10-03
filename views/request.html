@@ -3,27 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IRBN | USER</title>
+  <title>IRBN | REQUEST</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+      />
   <!-- DataTables -->
   <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-  <style>
-    tr td{
-    /* width: 89px; */
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-}
 
+  <link
+  rel="stylesheet"
+  href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+  integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+
+  <style>
+   
 td div{
     width: 50px;
 }
@@ -53,7 +64,7 @@ td div{
 .material-input:valid ~ .material-label {
   top: -10px;
   font-size: 12px;
-  color: #3498db; /* Change the color as desired */
+  color: #3498db; 
 }
 
 .rounded-input {
@@ -64,11 +75,11 @@ td div{
 
 .underline-input {
   border: none;
-  border-bottom: 2px solid #3498db; /* Change the color as desired */
-  border-top: 2px solid #576671; /* Change the color as desired */
+  border-bottom: 2px solid #3498db;
+  border-top: 2px solid #576671; 
   outline: none;
   border-radius: 30px; 
-  /* text-align: center; */
+  
 }
 
 .bootstrap-input {
@@ -95,9 +106,7 @@ a{
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/dash" class="nav-link">Home</a>
-      </li>
+      
     </ul>
 
     <!-- Right navbar links -->
@@ -192,6 +201,14 @@ a{
             </a>
           </li>
           <li class="nav-item">
+            <a href="/calendar" class="nav-link">
+              <i class="nav-icon fas fa-calendar"></i>
+              <p>
+                Calendar
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="/leavehistory" class="nav-link">
               <i class="nav-icon fa fa-history"></i>
               <p>Leave History</p>
@@ -199,8 +216,8 @@ a{
           </li>
           <li class="nav-item">
             <a class="nav-link active">
-              <i class="nav-icon fa fa-user"></i>
-              <p>Profile</p>
+              <i class="nav-icon fa fa-comments"></i>
+              <p>Request</p>
             </a>
           </li>
         </ul>
@@ -269,8 +286,8 @@ a{
               </li>
               <li class="nav-item">
                 <a class="nav-link active">
-                  <i class="nav-icon fa fa-user"></i>
-                  <p>Profile</p>
+                  <i class="nav-icon fa fa-comments"></i>
+                  <p>Request</p>
                 </a>
               </li>
             </li>
@@ -291,7 +308,7 @@ a{
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"><b>Profile</b></h1>
+            <h1 class="m-0"><b>Request</b></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
           
@@ -306,162 +323,74 @@ a{
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title text-bold">Profile</h3>
+                <h3 class="card-title text-bold">Request</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <div class="form-row">
-                 <div class="form-group col-lg-6">
                   <div class="form-row">
-                  <div class="form-group col-8 col-lg-8">
+                  <div class="form-group col-8 col-lg-2">
                       <label for="inputDate">Name</label>
-                      <input type="text" class="form-control underline-input" name="name" id="name"  disabled/>
+                      <input type="text" class="  form-control underline-input" name="name" id="name"  disabled/>
                   </div>
-                  <div class="form-group col-4 col-lg-4">
+                  <div class="form-group col-4 col-lg-2">
                       <label for="bkl">Buckle No.</label>
-                      <input type="number" class="form-control underline-input" name="bklid" id="bklid"  disabled/>
+                      <input type="number" class=" form-control underline-input" name="bklid" id="bklid"  disabled/>
                   </div>
-                  </div>
+                  <div class="form-group col-6 col-lg-2">
+                    <label for="id">Request ID</label>
+                    <input type="text" class=" form-control underline-input" name="rid" id="rid"  disabled/>
+                </div>
+                <div class="form-group col-6 col-lg-2">
+                  <label for="oneinputAddress">Status</label>
+                  <input type="text" class="form-control  underline-input" name="status" id="status" disabled/>
+              </div>
+
+              <div class="form-group col-8 col-lg-3">
+                <label for="alternate">From & To Date</label>
+                <input type="text" class="form-control  underline-input normal" name="date" id="twodate" disabled/>
+              </div>
+              <div class="form-group col-4 col-lg-1">
+                <label for="COY">Leave Count</label>
+                <input type="tel" class="form-control underline-input text-center" name="leaveCount" id="leaveCount" disabled/>
+              </div>
+                </div>
                  
                 <div class="form-row">
-                  <div class="form-group col-6 ">
-                    <label for="oneinputAddress">Phone Number</label>
-                    <input type="text" class="form-control  underline-input" name="phone" id="phone" oninput="validateInput(this);" maxlength="10" pattern="[0-9]*"  disabled/>
-                </div>
+                  
+                  <div class="form-group col-7 col-lg-2">
+                    <label for="type">Leave Type</label>
+                    <input type="text" class="form-control  underline-input" name="leaveType" id="leaveType"  disabled/>
+                  </div>  
+                  <div class="form-group col-5 col-lg-2">
+                    <label for="applydate">Applied Date</label>
+                    <input type="text" class="form-control  underline-input" name="applydate" id="applydate"  disabled/>
+                  </div>  
+                  
 
-                <div class="form-group col-6">
-                    <label for="alternate">Alternate Number</label>
-                    <input type="text" class="form-control underline-input normal" name="alterante" id="alternate" oninput="validateInput(this);" maxlength="10" pattern="[0-9]*" disabled/>
-                </div>
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group col-2">
-                    <label for="COY">COY</label>
-                    <input type="text" class="form-control underline-input" name="coy" id="COY" disabled/>
-                </div>
-                <div class="form-group col-4">
-                    <label for="COY">Designation</label>
-                    <input type="text" class="form-control underline-input" name="designation" id="policetype" disabled/>
-                </div>
-                <div class="form-group col-6">
-                    <label for="dob">D.O.B</label>
-                    <input type="date" class="form-control underline-input normal" name="dob" id="dob" disabled/>
-                </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-12">
-                    <label for="email">Email </label>
-                    <input type="email" class="form-control underline-input normal" name="email"  id="email" disabled/>
-                  </div>
-                  <div class="form-group col-12">
-                    <label for="address">Address</label>
-                    <textarea class="form-control underline-input normal"  name="address " id="address" cols="30" disabled></textarea>
-                </div>
-                </div>
-                <div class="form-row  d-none" id="visible">
-                  <div class="form-group col-6">
-                    <label for="phoneNumber">Access Type</label>
-                    <select class="form-control underline-input" name="accessType" id="accessType" disabled>
-                      <option value="admin">Admin</option>
-                      <option value="normal">Employee</option>
-                    </select>
-                  </div>
-                
-                  <div class="form-group col-6">
-                    <label for="alternateNumber">isActive</label>
-                    <select class="form-control underline-input" name="isActive" id="isActive" disabled>
-                      <option value= '1' >yes</option>
-                      <option value= '0' > No</option>
-                    </select>
-                  </div>
-                </div>
-                
-                 </div>
-              
-              <div class="form-group col-12 col-lg-6">
-                <hr>
-                <table class="table">
-                  <tr>
-                    <p class="h5 text-bold text-center mb-2">Available Leave</p>
-                  </tr>
-                      <tr >
-                        <th >Casual Leave</th>
-                        <td >
-                          <div >
-                              <input type="number" class="col-12 underline-input" id="casual" disabled>
-                          </div>
-                        </td>                                  
-                        </tr>
-                      <tr>
-                        <th >Holiday Permission</th>
-                        <td >
-                          <div >
-                                <input  type="number" class="col-12 underline-input" id="perm" disabled>
-                              </div>
-                            </td>                                  
-                      </tr>
-                      <tr>
-                        <th >Government Holiday</th>
-                          <td>
-                              <div >
-                                  <input type="number" class="col-12 underline-input" id="govern" disabled>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th >Restricted Holiday</th>
-                            <td >
-                              <div >
-                                <input  type="number" class="col-12 underline-input" id="restrict" disabled>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th >Earned Leave</th>
-                            <td >
-                              <div >
-                                <input  type="number" class="col-12 underline-input" id="earned" disabled>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                              <th >Medical Leave</th>
-                              <td >
-                                <div >
-                                    <input  type="number" class="col-12 underline-input" id="medical" disabled>
-                                </div>
-                            </td>                                  
-                          </tr>
-                          <tr>
-                              <th >Paternity Leave</th>
-                              <td >
-                                <div >
-                                    <input  type="number" class="col-12 underline-input" id="patern" disabled>
-                                </div>
-                            </td>                                  
-                          </tr>
-                        </table>
-                      </div>
-                      
-                    </div>
+                  <div class="form-group col-6 col-lg-2" id="insertfile">
                     
                   </div>
-
-                  <div class="form-group col-12">
+                  <div class="form-group col-12 col-lg-6">
+                    <label for="reason">Reason</label>
+                    <textarea name="reason" id="reason" class="form-control underline-input" rows="1" disabled></textarea>
+                  </div>
+                </div>
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group col-12 mt-4">
                     <div class="float-right d-none" id="after">
                       <button type="button" class="btn btn-danger mr-2" onclick="cancel()">Cancel</button>
-          
                       <button type="button" class="btn btn-success mr-3" onclick="save()">Save</button>
                     </div>   
                             
                     <div class="d-flex justify-content-between" id="before">
-                      <!-- <div class="d-none" id="deluser"> -->
-                        <button type="button" class="btn btn-danger ml-3 d-none" onclick="deleteUser()" id="deluser" >Delete</button>
-                      <!-- </div> -->
-                      <button type="button" class="btn btn-warning mr-3" onclick="edit()">Edit</button>
+                      
                     </div>
                   </div>
+                </div>
+
+                 
                   <!-- <hr> -->
           
                 </div>
@@ -476,17 +405,20 @@ a{
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
+      
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
+  
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
+   
   </aside>
   <!-- /.control-sidebar -->
+  
 </div>
 <!-- ./wrapper -->
 
@@ -511,9 +443,20 @@ a{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
+
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
-<script src="../profile.js"></script>
+<script src="../request.js"></script>
 
 
 </body>

@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', async event=>{
     const token = sessionStorage.getItem('token');
     const deleteUser = sessionStorage.getItem('delete');
 
-    // const preloader = document.querySelector('.preloader');
-    // preloader.style.display = 'flex';
-
     if(deleteUser == 'true'){
         toastr.success("User Deleted successfully...");
         sessionStorage.removeItem('delete');
@@ -34,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async event=>{
                 document.getElementById('info').innerHTML = `<a href="/profile" class="d-block">${req.name}</a>`
             }
             console.log(req.toDate- req.fromDate)
-            allUser.push([s,req.name,req.bklid,req.policetype,`<input type='button' onClick="openUserProfile('${req.bklid}')" value='Profile'/>`, `<input type='button' onClick="individualRequest('${req.bklid}')" value="View"/>`]);
+            allUser.push([s,req.name,req.bklid,req.policetype,`<input type='button' class="btn btn-primary rounded-circle" onClick="openUserProfile('${req.bklid}')" value='Profile'/>`, `<input type='button' class="btn btn-secondary rounded-circle" onClick="individualRequest('${req.bklid}')" value="View"/>`]);
             s++;
         }
         // console.log(allUser)

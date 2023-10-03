@@ -29,7 +29,7 @@ dotenv.config();
         app.use(express.static(path.join(__dirname,'public')))
         app.use(express.json());
         app.use(bodyParser.urlencoded({extended:true}));
-        app.engine('html',require('ejs').renderFile);
+        app.engine('html', require('ejs').renderFile);
 
         const filesDirectory = path.join(__dirname, 'uploads');
 
@@ -82,6 +82,12 @@ dotenv.config();
         app.get('/calendar', (req,res)=>{
           res.render('calendar.html')
         })
+        
+        app.get('/request',(req,res)=>{
+          res.render('request.html')
+        })
+
+        
 
         app.get('/documents/:fileName', (req, res) => {
             const fileName = req.params.fileName;
@@ -95,7 +101,7 @@ dotenv.config();
 
           app.get('/favicon.ico', (req, res) => {
             try {
-              const filePath = path.join(filesDirectory, 'favicon.ico');
+              const filePath = path.join(__dirname, 'favicon.ico');
               res.sendFile(filePath);
             } catch (error) {
               console.error('Error serving favicon:', error);
@@ -104,12 +110,11 @@ dotenv.config();
           });
 
         app.use('/auth', authUsers)
+
         app.use('/event', events)
 
-
-
         app.use(jwtTokenValidation)
-        
+
         app.use('/document',document)
 
         app.use('/notification', notification);
@@ -117,6 +122,7 @@ dotenv.config();
         app.use('/police',polices)
 
         app.listen(process.env.port, () => console.log('listing to port-' + process.env.port))
+
     } catch (error) {
         console.log(error)
         process.exit();

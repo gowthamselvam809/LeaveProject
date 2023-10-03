@@ -12,6 +12,7 @@ function logout(){
       headers: { 'Authorization': `Bearer ${token}` },
     });
     if(type[0].accesstype == 'admin'){
+      document.getElementById('top').innerText = 'ADMIN';
       document.getElementById('before').style.display = 'none';
       document.getElementById('after').classList.remove('d-none');
       document.getElementById('before').classList.remove('d-flex');
@@ -28,6 +29,8 @@ function logout(){
       }
       });
     }else{
+      document.getElementById('top').innerText = 'IRBN';
+
       document.getElementById('before').style.display = 'none';
       document.getElementById('after').classList.remove('d-none');
       document.getElementById('before').classList.remove('d-flex');

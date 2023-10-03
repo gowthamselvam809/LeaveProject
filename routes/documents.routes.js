@@ -1,7 +1,7 @@
 const route = require('express').Router();
 const multer = require('multer');
 
-const {getAllDocuments,getDocuments,pushRequest,approveRequest,denyRequest} = require('../services/documents.services');
+const {getAllDocuments,getDocuments,pushRequest,approveRequest,denyRequest, deleteRequest} = require('../services/documents.services');
 
 
 
@@ -23,7 +23,10 @@ route.post('/pushRequest', upload.single('file') ,pushRequest);
 route.get('/getAllDocuments', getAllDocuments);
 route.get('/getDocuments', getDocuments);
 route.post('/approveRequest', approveRequest);
-route.post('/denyRequest', denyRequest)
+route.post('/denyRequest', denyRequest);
+route.delete('/deleteRequest', deleteRequest);
+// route.post('/singleRequest', singleRequest);
+
 
 
 module.exports = route;

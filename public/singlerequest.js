@@ -1,3 +1,11 @@
+
+const deleteUser = sessionStorage.getItem('delete');
+
+    if(deleteUser == 'true'){
+        toastr.success("Request Deleted successfully...");
+        sessionStorage.removeItem('delete');
+    }
+
 document.addEventListener('DOMContentLoaded', async event=>{
     const bklid = sessionStorage.getItem('bklid');
     console.log(bklid)
@@ -27,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async event=>{
             if(request.request.length > 1){
                 request.request.sort((a, b) => new Date(b.date) - new Date(a.date));
             }
-            allRequest.push([s,dateFormat(req.fromDate),dateFormat(req.toDate),date_diff(req.fromDate,req.toDate)+1,req.leaveType, req.reason, req.status,req.fileName?`<a href="/documents/${req.fileName}">View<a/>`:'no attachments']);
+            allRequest.push([s,dateFormat(req.fromDate),dateFormat(req.toDate),req.leaveType, req.status, `<button class="btn btn-primary" onClick="openReq('${bklid}','${req.requestId}')">Info</button>`]);
             s++;
         }
 
@@ -60,7 +68,14 @@ function logout(){
     window.location.href = '/log'
   }
      
+function openReq(bklid, reqId){
+    reqId = `${reqId}`;
+    bklid = `${bklid}`
+    sessionStorage.setItem('reqId', reqId);
+    sessionStorage.setItem('bklid', bklid);
+    window.location.href = `/request`
 
+}
 
 var date_diff = function(date1, date2) {
     dt1 = new Date(date1);
