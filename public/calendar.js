@@ -205,6 +205,11 @@ $(async function () {
 
 })
 
+function logout(){
+  sessionStorage.removeItem('token');
+  window.location.href = '/log'
+}
+
 function pushEvent(props, title, date){
     const data = {
       title : title,

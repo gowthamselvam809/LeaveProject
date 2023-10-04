@@ -46,16 +46,20 @@ document.addEventListener('DOMContentLoaded', async event=>{
 
                   if(r.status === 'pending' && user.accesstype == 'admin'){
                       document.getElementById('modify').classList.remove('d-none');
+                  }
+                  if(r.status === 'pending' && userData[0].accesstype === 'normal' ){
+                    document.getElementById('delreq').classList.add('d-none');
+                  }
 
-                  }Date
                   // console.log(r.requestId === reqId)
                   const fromDate = dateSeq(r.fromDate);
                   const toDate = dateSeq(r.toDate);
-                  const files = r.fileName ? ` <input type="button" class="form-control underline-input btn btn-primary" name="file" id="file"  onclick="openPdf('/documents/${r.fileName}')" value="View File"/>` : ` <input type="button" class="form-control underline-input btn btn-secondary" name="file" id="file"  value="no Attachments" disabled/>`
+                  const files = r.fileName ? ` <input type="button" class="form-control underline-input btn btn-primary  rounded-circle" name="file" id="file"  onclick="openPdf('/documents/${r.fileName}')" value="View File"/>` : ` <input type="button" class="form-control underline-input btn btn-secondary rounded-circle" name="file" id="file"  value="no Attachments" disabled/>`
                   $('#name').val(user.name);
                   $('#bklid').val(user.bklid);
                   $('#rid').val(reqId); 
                   $('#applydate').val(dateFormat(r.date)); 
+                  $('#updateStatus').val(dateFormat(r.updateStatus)); 
                   $('#twodate').val(`${dateSeq(r.fromDate)} - ${dateSeq(r.toDate)}`);
                   $('#leaveCount').val(date_diff(fromDate,toDate) +1);
                   $('#leaveType').val(r.leaveType);
@@ -68,12 +72,8 @@ document.addEventListener('DOMContentLoaded', async event=>{
             }  
           }
         }        
-        if(userData[0].accesstype === 'admin'){
-          
+       
 
-        }else{
-          document.getElementById('delreq').classList.add('d-none');
-        }
         initializeDateRangePicker()
 
     }catch(error){
@@ -205,10 +205,18 @@ var date_diff = function(date1, date2) {
   return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate()) ) / (1000 * 60 * 60 * 24));
 }
 const dateFormat = (date) => {
-  let newDate = new Date(date).toLocaleString("en-us", {
+  const options = {
     day: "numeric",
     month: "short",
     year: "numeric",
-  });
+    hour: "numeric",
+    minute: "numeric",
+  };
+  let newDate = new Date(date).toLocaleString("en-us", options);
   return newDate;
 };
+
+function logout(){
+  sessionStorage.removeItem('token');
+  window.location.href = '/log'
+}

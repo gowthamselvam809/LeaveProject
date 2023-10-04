@@ -40,6 +40,9 @@ dotenv.config();
         app.get('/log', (req,res)=>{
             res.render('login.html');
         })
+        app.get('/', (req,res)=>{
+            res.render('login.html');
+        })
         app.get('/yesterday',(req,res)=>{
           res.render('yesterday.html');
         })

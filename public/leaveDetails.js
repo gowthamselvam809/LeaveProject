@@ -43,7 +43,7 @@ async function today(){
                 // } 
                 // Today
                 if (daysDifference <= 0 && currLeaveDuration > 0 ) {
-                    today.push([s, name, bklidreq,policeType,r.leaveType])
+                    today.push([s, name, bklidreq,policeType,r.leaveType,  `<button class="btn btn-primary rounded-circle" onClick="openReq('${bklidreq}','${r.requestId}')">Info</button>`])
                 } 
                 // // Tomorrow
                 // if(daysDifference == 1){
@@ -85,6 +85,14 @@ async function today(){
         console.error("Error message: " + error.statusText);
       }
     }
+}
+function openReq(bklid, reqId){
+  reqId = `${reqId}`;
+  bklid = `${bklid}`
+  sessionStorage.setItem('reqId', reqId);
+  sessionStorage.setItem('bklid', bklid);
+  window.location.href = `/request`
+
 }
 
 function logout(){
@@ -138,13 +146,13 @@ async function tomorrow(){
                 // } 
                 // // Tomorrow
                 if(daysDifference == 1){
-                    tomorrow.push([s, name, bklidreq,policeType,r.leaveType])
+                    tomorrow.push([s, name, bklidreq,policeType,r.leaveType, `<button class="btn btn-primary rounded-circle" onClick="openReq('${bklidreq}','${r.requestId}')">Info</button>`])
                 }
                 else if (daysDifference >= 0  && leaveDuration > 1) {
-                    tomorrow.push([s, name, bklidreq,policeType,r.leaveType])
+                    tomorrow.push([s, name, bklidreq,policeType,r.leaveType, `<button class="btn btn-primary rounded-circle" onClick="openReq('${bklidreq}','${r.requestId}')">Info</button>`])
                 }
                 else if(daysDifference < 0 && currLeaveDuration > 1){
-                    tomorrow.push([s, name, bklidreq,policeType,r.leaveType])
+                    tomorrow.push([s, name, bklidreq,policeType,r.leaveType, `<button class="btn btn-primary rounded-circle" onClick="openReq('${bklidreq}','${r.requestId}')">Info</button>`])
                 }
                 // // Later
                 // if(currLeaveDuration > 2){
@@ -216,7 +224,7 @@ async function yesterday(){
                 console.log("currLeaveDuration : "+currLeaveDuration)                
                 // Yesterday
                 if (daysDifference < 0 && currLeaveDuration >= 0 ) {
-                    yesterday.push([s, name, bklidreq,policeType,r.leaveType])
+                    yesterday.push([s, name, bklidreq,policeType,r.leaveType, `<button class="btn btn-primary rounded-circle" onClick="openReq('${bklidreq}','${r.requestId}')">Info</button>`])
                 } 
                 // Today
                 // if (daysDifference <= 0 && currLeaveDuration > 0 ) {
@@ -302,7 +310,7 @@ async function later(){
                 console.log("currLeaveDuration : "+currLeaveDuration)                
                 // Yesterday
                 if (daysDifference < 0 && currLeaveDuration >= 0 ) {
-                    later.push([s, name, bklidreq,policeType,r.leaveType])
+                    later.push([s, name, bklidreq,policeType,r.leaveType, `<button class="btn btn-primary rounded-circle" onClick="openReq('${bklidreq}','${r.requestId}')">Info</button>`])
                 } 
                 // Today
                 // if (daysDifference <= 0 && currLeaveDuration > 0 ) {

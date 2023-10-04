@@ -166,7 +166,7 @@ const token = sessionStorage.getItem('token')
               for(let not of recentNotifications){
                 if(!not.adminSeen){
                   const time = timings(not.date);
-                  notifyDetails += `<a href="#" class="dropdown-item" onClick = adminSeenandShowUser('${not.requestId}','${not.bklid}') >
+                  notifyDetails += `<a href="#" class="dropdown-item " onClick = adminSeenandShowUser('${not.requestId}','${not.bklid}') >
                    <div class="media">
                      <!-- <img src="../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3"> -->
                      <div class="media-body">
@@ -201,6 +201,8 @@ const token = sessionStorage.getItem('token')
       }
     }
   })
+
+  
 
   async function adminSeenandShowUser(reqId, bklid){
     console.log(reqId, bklid)
